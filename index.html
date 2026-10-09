@@ -2,160 +2,150 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SAMA Architect - Urbanismo Inteligente 2026</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>SAMA ARCHITECT - 3D Urbanism Simulator v2.6.1 • 2026</title>
 <script async src="https://unpkg.com/es-module-shims@1.8.0/dist/es-module-shims.js"></script>
 <script type="importmap">{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.160.0/examples/jsm/"}}</script>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@700;900&display=swap');
-*{margin:0;padding:0;box-sizing:border-box}body{background:#060a12;color:#fff;font-family:'Inter',sans-serif;overflow:hidden}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@600;800&family=JetBrains+Mono:wght@400;700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#080e1c;color:#dbe7ff;font-family:'Inter',sans-serif;overflow:hidden}
+#top{position:absolute;top:0;left:0;right:0;height:64px;background:#0a1220;border-bottom:1px solid #1e2d42;display:flex;align-items:center;padding:0 18px;z-index:20}
+#top h1{font-size:22px;font-weight:800;letter-spacing:1px}.blue{color:#5ee1ff}.green{display:inline-block;padding:4px 10px;background:#0f2418;border:1px solid #2aff7a;border-radius:20px;color:#2aff7a;font-family:'JetBrains Mono';font-size:10px;margin-left:20px}
+#main{position:absolute;top:64px;bottom:0;left:0;right:0;display:flex}
+#left{width:300px;background:rgba(12,18,32,0.96);border-right:1px solid #1e2d42;padding:12px;overflow-y:auto}
+#center{flex:1;position:relative;background:#050a14}
+#right{width:300px;background:rgba(12,18,32,0.96);border-left:1px solid #1e2d42;padding:12px;overflow-y:auto}
+.prof{display:flex;gap:10px;padding:10px;border:1px solid #1c2c42;border-radius:12px;margin-bottom:8px;cursor:pointer;background:#111a2a}
+.prof.active{border-color:#5ee1ff;box-shadow:0 0 12px rgba(94,225,255,0.3)}
+.prof img{width:44px;height:44px;border-radius:8px;object-fit:cover}
+.prof b{font-size:11px;display:block}.prof i{font-size:8px;opacity:0.6;font-style:normal;display:block}
+.badge{font-size:7px;padding:2px 6px;border-radius:10px;background:#1a2a3a;margin-top:4px;display:inline-block}
+.badge.on{background:#5ee1ff;color:#000}
 #canvas{position:absolute;inset:0}
-#ui{position:absolute;left:0;top:0;width:380px;height:100vh;background:rgba(10,16,28,0.92);backdrop-filter:blur(12px);border-right:1px solid #1e2d42;padding:16px;display:flex;flex-direction:column;z-index:10}
-h1{font-size:28px;letter-spacing:2px}h1 span{color:#5ee1ff}
-.sub{font-size:10px;opacity:0.5;letter-spacing:1px;margin-bottom:12px}
-.archs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
-.arch{border:1px solid #23344d;background:#121a26;border-radius:10px;padding:8px;cursor:pointer;transition:0.2s}
-.arch.active{border-color:#5ee1ff;background:#162032;box-shadow:0 0 15px rgba(94,225,255,0.3)}
-.arch b{font-size:11px;display:block}.arch i{font-size:9px;opacity:0.6;font-style:normal}
-.buildMenu{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin:12px 0}
-.buildBtn{background:#162032;border:1px solid #2a3e5a;border-radius:8px;padding:8px 4px;font-size:10px;cursor:pointer;text-align:center}
-.buildBtn:hover{background:#1e2d42}
-.log{background:#070b10;border:1px solid #1e2d42;border-radius:8px;padding:10px;font-family:'JetBrains Mono';font-size:10px;white-space:pre-wrap;line-height:1.5;margin-top:auto;min-height:110px}
-.stats{display:flex;gap:6px;margin:8px 0}.stats div{background:#162032;border-radius:6px;padding:6px;flex:1;font-family:'JetBrains Mono';font-size:10px;text-align:center}
-#interiorUI{position:absolute;right:20px;top:20px;width:240px;background:rgba(15,20,30,0.9);border:1px solid #23344d;border-radius:12px;padding:12px;display:none;z-index:20}
-.btn{width:100%;background:#5ee1ff;color:#000;border:none;padding:8px;border-radius:6px;font-weight:800;font-size:11px;margin-top:6px;cursor:pointer}
-.hint{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.7);padding:8px 14px;border-radius:20px;font-size:10px;font-family:'JetBrains Mono';z-index:10}
+.card{background:#101a29;border:1px solid #1c2c42;border-radius:10px;padding:10px;margin-bottom:10px}
+.card h3{font-size:10px;opacity:0.6;margin-bottom:8px;letter-spacing:1px}
+.metric{display:flex;justify-content:space-between;font-family:'JetBrains Mono';font-size:11px;margin:4px 0}
+.buildGrid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.buildBtn{background:#162032;border:1px solid #2a3e5a;border-radius:8px;padding:10px 2px;font-size:10px;text-align:center;cursor:pointer}
+.buildBtn:hover{background:#1e2f4a;border-color:#5ee1ff}
+.log{font-family:'JetBrains Mono';font-size:9px;background:#080e1c;border:1px solid #1c2c42;border-radius:8px;padding:8px;white-space:pre-wrap;line-height:1.4}
+input[type=range]{width:100%}
+#interior{display:none;position:absolute;right:310px;top:12px;background:rgba(15,20,30,0.95);border:1px solid #2a3e5a;border-radius:12px;padding:12px;width:220px;z-index:15}
+.btn{width:100%;background:#5ee1ff;color:#000;border:none;padding:8px;border-radius:8px;font-weight:800;font-size:11px;cursor:pointer;margin-top:6px}
 </style>
 </head>
 <body>
-<div id="canvas"></div>
-<div id="ui">
-  <h1>SAMA <span>ARCHITECT</span></h1>
-  <div class="sub">URBANISMO INTELIGENTE • 2026 • THREE.JS</div>
-  <div style="font-size:10px;opacity:0.6;margin-bottom:4px">ELIGE TU ARQUITECTO:</div>
-  <div class="archs" id="archs"></div>
-  <div style="font-size:10px;opacity:0.6;margin:6px 0">CONSTRUIR EN LOTE SELECCIONADO:</div>
-  <div class="buildMenu">
-    <div class="buildBtn" data-type="casa">🏠<br>CASA</div>
-    <div class="buildBtn" data-type="edificio">🏢<br>EDIFICIO<br>+Elevador</div>
-    <div class="buildBtn" data-type="hotel">🏨<br>HOTEL<br>Lujo</div>
-    <div class="buildBtn" data-type="tienda">🛍️<br>TIENDA</div>
-    <div class="buildBtn" data-type="restaurante">🍝<br>REST.</div>
-  </div>
-  <div class="stats"><div id="area">0 m²</div><div id="costo">0 COP</div><div id="vol">0 m³</div></div>
-  <div class="log" id="log">Click en un lote para construir...</div>
+<div id="top">
+<h1>SAMA <span class="blue">ARCHITECT</span> <span style="font-size:11px;opacity:0.5;font-weight:400">3D URBANISM SIMULATOR • v2.6.1 • 2026</span></h1>
+<div class="green">● SIMULATION RUNNING - 1.2x</div><div class="green" style="border-color:#ffcc4d;color:#ffcc4d;margin-left:8px">⚙ WEBGL ACTIVE</div>
+<div style="margin-left:auto;font-family:'JetBrains Mono';font-size:10px">SA</div>
 </div>
-<div id="interiorUI">
-  <b id="intTitle">INTERIOR</b>
-  <div style="font-size:10px;opacity:0.6;margin:8px 0">Modo decoración base moderna</div>
-  <label style="font-size:10px">Color Muro</label><input type="color" id="wallColor" value="#e8ddd0" style="width:100%"><br>
-  <label style="font-size:10px;margin-top:6px;display:block">Piso</label><select id="floorMat" style="width:100%;background:#111;padding:4px;color:#fff;border-radius:4px"><option value="wood">Madera Japandi</option><option value="concrete">Concreto Industrial</option><option value="marble">Mármol Rococó</option><option value="terracota">Terracota Mediterráneo</option><option value="glass">Vidrio Contemporáneo</option></select>
-  <button class="btn" id="addFurniture">+ Agregar Mueble</button>
-  <button class="btn" style="background:#222;color:#fff" id="exitInterior">← Salir a Ciudad</button>
+<div id="main">
+<div id="left">
+<div style="font-size:10px;opacity:0.5;margin-bottom:8px">ARCHITECT PROFILES</div>
+<div id="profiles"></div>
+<div class="card"><h3>LOT DIMENSIONS</h3>
+<div style="font-family:'JetBrains Mono';font-size:9px">Lot Width: <span id="wLabel">40</span>m<input type="range" id="w" min="20" max="80" value="40">
+Lot Depth: <span id="dLabel">30</span>m<input type="range" id="d" min="20" max="60" value="30">
+Building Height: <span id="hLabel">12</span> fl<input type="range" id="h" min="1" max="20" value="3"></div>
+<div style="margin-top:8px"><label style="font-size:9px">Snap to Grid</label></div>
+<div class="buildGrid" style="margin-top:10px">
+<div class="buildBtn" data-t="casa">🏠<br>CASA</div>
+<div class="buildBtn" data-t="edificio">🏢<br>EDIFICIO<br>+Elevador</div>
+<div class="buildBtn" data-t="hotel">🏨<br>HOTEL Lujo</div>
+<div class="buildBtn" data-t="tienda">🛍️<br>TIENDA</div>
+<div class="buildBtn" data-t="restaurante" style="grid-column:span 2">🍝 RESTAURANTE</div>
 </div>
-<div class="hint">Click lote = construir | Doble click edificio = entrar | Drag orbitar, Scroll zoom | Inspired by Cities: Skylines</div>
+<button class="btn" style="margin-top:10px" id="applyLot">◉ APPLY LOT</button>
+</div>
+<div class="log" id="log"></div>
+</div>
+<div id="center"><div id="canvas"></div><div id="interior"><b id="intTitle">INTERIOR</b><br><label style="font-size:9px">Muro</label><input type="color" id="wallC" value="#e8ddd0" style="width:100%"><button class="btn" id="addSofa">+ Mueble Moderno</button><button class="btn" style="background:#222;color:#fff" id="exitInt">← Salir</button></div></div>
+<div id="right">
+<div class="card"><h3>DASHBOARD - REAL-TIME METRICS</h3>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-family:'JetBrains Mono';font-size:9px">
+<div style="background:#111a2a;padding:8px;border-radius:8px">POPULATION<br><b style="font-size:14px">12,847</b><br><span style="color:#2aff7a">+124 (1.0%)</span></div>
+<div style="background:#111a2a;padding:8px;border-radius:8px">BUDGET<br><b style="font-size:14px">$4.82M</b><br><span style="color:#ff5a5a">-$120K</span></div>
+<div style="background:#111a2a;padding:8px;border-radius:8px">BUDGET<br>$4.82M</div>
+<div style="background:#111a2a;padding:8px;border-radius:8px">FOOT TRAFFIC<br>3,240 p/h</div>
+<div style="background:#111a2a;padding:8px;border-radius:8px;grid-column:span 2">CARBON EMISSIONS<br>1.42 tCO₂ -14.2% ↓</div>
+</div>
+</div>
+<div class="card"><h3>SYSTEM ANALYTICS - TRAFFIC FLOW (24H)</h3><canvas id="chart" width="260" height="80" style="background:#0a1220;border-radius:6px"></canvas></div>
+<div class="card"><h3>ENVIRONMENTAL DATA</h3><div class="metric"><span>Sun Exposure:</span><span>72%</span></div><div class="metric"><span>Wind Flow:</span><span>14 km/h NW</span></div><div class="metric"><span>Noise Level:</span><span>58 dB</span></div></div>
+<div class="card"><h3>SELECTED LOT</h3><div id="lotInfo" style="font-family:'JetBrains Mono';font-size:9px">LOT-024: Zoning MIXED-USE - Cost $2.4M - Time 42d 06h</div></div>
+</div>
+</div>
 <script type="module">
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-const canvasDiv=document.getElementById('canvas');
-const archsDiv=document.getElementById('archs');
-const logEl=document.getElementById('log');
-const interiorUI=document.getElementById('interiorUI');
-let scene,camera,renderer,controls,raycaster,mouse,lots=[],buildings=[],selectedLot=null,interiorMode=false,currentBuilding=null,avatars=[];
-let currentArch='andres';
 const ARCHS={
-  aleja:{name:'ALEJA',style:'Japandi',color:0xe8ddd0,accent:0xc4a882,desc:'Moderno Japandi [2.85m]'},
-  andres:{name:'ANDRES',style:'Industrial',color:0x2a2a2a,accent:0xffc83d,desc:'Industrial [Cuadrática]'},
-  diana:{name:'DIANA',style:'Rococó',color:0xf5f0e8,accent:0xd4af37,desc:'Rococó [Lineal]'},
-  alfred:{name:'ALFRED',style:'Mediterráneo',color:0xf7f3e8,accent:0xc05c3c,desc:'Mediterráneo [Volumen]'},
-  diego:{name:'DIEGO',style:'Contemporáneo',color:0x111111,accent:0x5ee1ff,desc:'Contemp. [Arco]'}
+ aleja:{name:'Aleja Japandi',style:'JAPANDI - MINIMAL / WOOD',color:0xe8ddd0,accent:0xc4a882,img:'aleja.jpg',desc:'Moderno Japandi [2.85m]'},
+ andres:{name:'Andres Industrial',style:'INDUSTRIAL - RAW / STEEL',color:0x5a5a5a,accent:0xffc83d,img:'andres.jpg',desc:'Industrial [Cuadrática]'},
+ diana:{name:'Diana Rococo',style:'ROCOCO - CLASSICAL - ORNATE',color:0xfef6e8,accent:0xd4af37,img:'diana.jpg',desc:'Rococó [Lineal]'},
+ alfred:{name:'Alfred Mediterraneo',style:'MEDITERRANEO - TERRACOTA / WARM',color:0xf5e6c8,accent:0xc05c3c,img:'alfred.jpg',desc:'Mediterráneo [Volumen]'},
+ diego:{name:'Diego Contemporaneo',style:'CONTEMPORANEO - GLASS / MODERN',color:0x222222,accent:0x5ee1ff,img:'diego.jpg',desc:'Contemp. [Arco]'}
 };
+let current='aleja', scene,camera,renderer,controls,raycaster,mouse,lots=[],builds=[],avatars3D=[],craneGroups=[],cars=[],time=0,selectedLot=null,inside=null;
+const canvasDiv=document.getElementById('canvas');
 function init(){
-  scene=new THREE.Scene();scene.background=new THREE.Color(0x060a12);scene.fog=new THREE.Fog(0x060a12,25,60);
-  camera=new THREE.PerspectiveCamera(60,innerWidth/innerHeight,0.1,200);camera.position.set(18,18,12);
-  renderer=new THREE.WebGLRenderer({antialias:true});renderer.setSize(innerWidth,innerHeight);renderer.shadowMap.enabled=true;canvasDiv.appendChild(renderer.domElement);
-  controls=new OrbitControls(camera,renderer.domElement);controls.enableDamping=true;controls.target.set(0,0,0);
-  raycaster=new THREE.Raycaster();mouse=new THREE.Vector2();
-  scene.add(new THREE.AmbientLight(0xffffff,0.6));
-  const sun=new THREE.DirectionalLight(0xffffff,1.2);sun.position.set(10,25,10);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);scene.add(sun);
-  const ground=new THREE.Mesh(new THREE.PlaneGeometry(100,100),new THREE.MeshStandardMaterial({color:0x0f1826}));ground.rotation.x=-Math.PI/2;ground.receiveShadow=true;ground.name='ground';scene.add(ground);
-  scene.add(new THREE.GridHelper(80,40,0x1a2a40,0x111a26));
-  createLots();createArchSelector();createAvatars();
-  window.addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);});
-  renderer.domElement.addEventListener('pointerdown',onPointerDown);renderer.domElement.addEventListener('dblclick',onDblClick);
-  document.querySelectorAll('.buildBtn').forEach(b=>b.addEventListener('click',()=>{if(selectedLot) buildOnLot(selectedLot,b.dataset.type)}));
-  document.getElementById('exitInterior').onclick=exitInterior;
-  document.getElementById('wallColor').oninput=e=>{if(currentBuilding) currentBuilding.wallMat.color.set(e.target.value)};
-  animate();updateLog();
+ scene=new THREE.Scene();scene.background=new THREE.Color(0x080e1c);scene.fog=new THREE.Fog(0x080e1c,35,70);
+ camera=new THREE.PerspectiveCamera(42,canvasDiv.clientWidth/canvasDiv.clientHeight,0.1,200);camera.position.set(24,20,18);
+ renderer=new THREE.WebGLRenderer({antialias:true});renderer.setSize(canvasDiv.clientWidth,canvasDiv.clientHeight);renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;canvasDiv.appendChild(renderer.domElement);
+ controls=new OrbitControls(camera,renderer.domElement);controls.enableDamping=true;controls.maxPolarAngle=Math.PI/2.1;controls.target.set(0,0,0);
+ scene.add(new THREE.AmbientLight(0x8aa0c0,0.6));
+ const sun=new THREE.DirectionalLight(0xffffff,1.4);sun.position.set(15,30,10);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);sun.shadow.camera.left=-40;sun.shadow.camera.right=40;sun.shadow.camera.top=40;sun.shadow.camera.bottom=-40;scene.add(sun);
+ const ground=new THREE.Mesh(new THREE.PlaneGeometry(200,200),new THREE.MeshStandardMaterial({color:0x0f1a2a,roughness:0.9}));ground.rotation.x=-Math.PI/2;ground.receiveShadow=true;scene.add(ground);
+ scene.add(new THREE.GridHelper(200,80,0x1a2a40,0x111a26));
+ createLots();createProfiles();createAvatars3D();createTraffic();createCranes();
+ raycaster=new THREE.Raycaster();mouse=new THREE.Vector2();
+ window.addEventListener('resize',()=>{camera.aspect=canvasDiv.clientWidth/canvasDiv.clientHeight;camera.updateProjectionMatrix();renderer.setSize(canvasDiv.clientWidth,canvasDiv.clientHeight);});
+ renderer.domElement.addEventListener('pointerdown',onDown);renderer.domElement.addEventListener('dblclick',onDbl);
+ document.querySelectorAll('.buildBtn').forEach(b=>b.addEventListener('click',()=>{if(selectedLot) buildLot(selectedLot,b.dataset.t)}));
+ document.getElementById('exitInt').onclick=()=>{inside=null;document.getElementById('interior').style.display='none';camera.position.set(24,20,18);controls.target.set(0,0,0);};
+ document.getElementById('wallC').oninput=e=>{if(inside) inside.mat.color.set(e.target.value)};
+ drawChart();updateLog();animate();
 }
-function createArchSelector(){
-  archsDiv.innerHTML='';Object.keys(ARCHS).forEach(k=>{const a=ARCHS[k];const div=document.createElement('div');div.className='arch'+(k===currentArch?' active':'');div.innerHTML=`<b>${a.name}</b><i>${a.style}</i><br><i>${a.desc}</i>`;div.onclick=()=>{currentArch=k;document.querySelectorAll('.arch').forEach(el=>el.classList.remove('active'));div.classList.add('active');highlightAvatars();updateLog();};archsDiv.appendChild(div);});
+function createProfiles(){
+ const cont=document.getElementById('profiles');Object.keys(ARCHS).forEach(k=>{const a=ARCHS[k];const d=document.createElement('div');d.className='prof'+(k===current?' active':'');d.innerHTML=`<img src="${a.img}" onerror="this.src='https://i.pravatar.cc/100?u=${k}'"><div><b>${a.name}</b><i>${a.style}</i><span class="badge ${k===current?'on':''}">${k===current?'ACTIVE':'IDLE'}</span></div>`;d.onclick=()=>{current=k;document.querySelectorAll('.prof').forEach(p=>{p.classList.remove('active');p.querySelector('.badge').textContent='IDLE';p.querySelector('.badge').classList.remove('on')});d.classList.add('active');d.querySelector('.badge').textContent='ACTIVE';d.querySelector('.badge').classList.add('on');highlightAvatars();updateLog();};cont.appendChild(d);});
 }
 function createLots(){
-  for(let x=-4;x<=4;x++){for(let z=-4;z<=4;z++){if(Math.random()>0.3){const lot=new THREE.Mesh(new THREE.BoxGeometry(3.2,0.15,3.2),new THREE.MeshStandardMaterial({color:0x162032}));lot.position.set(x*4,0.075,z*4);lot.receiveShadow=true;lot.userData={type:'lot',grid:{x,z},built:false};lots.push(lot);scene.add(lot);}}}
+ for(let x=-5;x<=5;x++){for(let z=-4;z<=4;z++){if(Math.abs(x)<1&&Math.abs(z)<1) continue;const lot=new THREE.Mesh(new THREE.BoxGeometry(3.6,0.12,3.6),new THREE.MeshStandardMaterial({color:0x162032}));lot.position.set(x*4.5,0.06,z*4.5);lot.receiveShadow=true;lot.userData={grid:{x,z},built:false};lots.push(lot);scene.add(lot);}}
 }
-function createAvatars(){
-  Object.keys(ARCHS).forEach((k,i)=>{const data=ARCHS[k];const g=new THREE.Group();const body=new THREE.Mesh(new THREE.CapsuleGeometry(0.2,0.5,4,8),new THREE.MeshStandardMaterial({color:data.accent}));body.position.y=0.6;g.add(body);const head=new THREE.Mesh(new THREE.SphereGeometry(0.22,12,12),new THREE.MeshStandardMaterial({color:0xffdbac}));head.position.y=1.05;g.add(head);const helm=new THREE.Mesh(new THREE.SphereGeometry(0.26,12,12,0,Math.PI*2,0,Math.PI/2),new THREE.MeshStandardMaterial({color:data.accent}));helm.position.y=1.1;g.add(helm);g.position.set(-8+i*2.5,0,-8);g.name=k;avatars.push(g);scene.add(g);});
+function createAvatars3D(){
+ Object.keys(ARCHS).forEach((k,i)=>{const g=new THREE.Group();const body=new THREE.Mesh(new THREE.CapsuleGeometry(0.18,0.5,4,8),new THREE.MeshStandardMaterial({color:ARCHS[k].accent}));body.position.y=0.6;body.castShadow=true;g.add(body);const head=new THREE.Mesh(new THREE.SphereGeometry(0.2,12,12),new THREE.MeshStandardMaterial({color:0xffdbac}));head.position.y=1.0;g.add(head);g.position.set(-12+i*2.2,0,-10);g.name=k;avatars3D.push(g);scene.add(g);});highlightAvatars();
 }
-function highlightAvatars(){avatars.forEach(a=>{a.scale.set(a.name===currentArch?1.4:1,a.name===currentArch?1.4:1,a.name===currentArch?1.4:1)});}
-function onPointerDown(e){
-  if(interiorMode) return;
-  const rect=renderer.domElement.getBoundingClientRect();mouse.x=((e.clientX-rect.left)/rect.width)*2-1;mouse.y=-((e.clientY-rect.top)/rect.height)*2+1;
-  raycaster.setFromCamera(mouse,camera);const hits=raycaster.intersectObjects(lots);
-  if(hits.length){selectLot(hits[0].object)}
+function highlightAvatars(){avatars3D.forEach(a=>{const act=a.name===current;a.scale.set(act?1.5:1,act?1.5:1);})}
+function createCranes(){
+ for(let i=0;i<3;i++){const cg=new THREE.Group();const pole=new THREE.Mesh(new THREE.CylinderGeometry(0.15,0.2,18,8),new THREE.MeshStandardMaterial({color:0xffcc4d}));pole.position.y=9;cg.add(pole);const arm=new THREE.Group();arm.position.y=17.5;const beam=new THREE.Mesh(new THREE.BoxGeometry(14,0.25,0.25),new THREE.MeshStandardMaterial({color:0xffcc4d}));beam.position.x=3;arm.add(beam);const hook=new THREE.Mesh(new THREE.BoxGeometry(0.3,0.5,0.3),new THREE.MeshStandardMaterial({color:0xff3b3b}));hook.position.set(5, -2,0);hook.name='hook';arm.add(hook);cg.add(arm);cg.position.set((Math.random()-0.5)*20,0,(Math.random()-0.5)*20);cg.userData.arm=arm;craneGroups.push(cg);scene.add(cg);}
 }
-function onDblClick(e){
-  const rect=renderer.domElement.getBoundingClientRect();mouse.x=((e.clientX-rect.left)/rect.width)*2-1;mouse.y=-((e.clientY-rect.top)/rect.height)*2+1;
-  raycaster.setFromCamera(mouse,camera);const hits=raycaster.intersectObjects(buildings.map(b=>b.mesh));
-  if(hits.length){enterInterior(buildings.find(b=>b.mesh===hits[0].object))}
+function createTraffic(){
+ for(let i=0;i<8;i++){const car=new THREE.Mesh(new THREE.BoxGeometry(0.6,0.3,0.35),new THREE.MeshStandardMaterial({color:ARCHS[Object.keys(ARCHS)[i%5]].accent}));car.position.set((Math.random()-0.5)*40,0.2,(Math.random()-0.5)*30);car.userData.speed=0.02+Math.random()*0.04;cars.push(car);scene.add(car);}
 }
-function selectLot(lot){
-  lots.forEach(l=>l.material.color.set(0x162032));lot.material.color.set(0x2a4a6a);selectedLot=lot;
-  logEl.textContent=`Lote [${lot.userData.grid.x},${lot.userData.grid.z}] seleccionado.\nElige tipo de construcción arriba.\nArquitecto activo: ${ARCHS[currentArch].name} - ${ARCHS[currentArch].style}`;
+function onDown(e){
+ if(inside) return;const r=renderer.domElement.getBoundingClientRect();mouse.x=((e.clientX-r.left)/r.width)*2-1;mouse.y=-((e.clientY-r.top)/r.height)*2+1;raycaster.setFromCamera(mouse,camera);const hits=raycaster.intersectObjects(lots);if(hits.length){lots.forEach(l=>l.material.color.set(0x162032));hits[0].object.material.color.set(0x2aff7a);selectedLot=hits[0].object;document.getElementById('lotInfo').textContent=`LOT-${hits[0].object.userData.grid.x}${hits[0].object.userData.grid.z}: Zoning MIXED-USE - Architect ${ARCHS[current].name} - Style ${ARCHS[current].style}`;}
 }
-function buildOnLot(lot,type){
-  if(lot.userData.built) return;
-  lot.userData.built=true;lot.visible=false;
-  const group=new THREE.Group();const arch=ARCHS[currentArch];
-  const b=Math.random()*60+40;const x=Math.random()*30+15;
-  const area=-x*x+b*x;const costo=area*1200+5000;const vol=area*2.85*(type==='edificio'?5:type==='hotel'?4:1);
-  let h=type==='casa'?2.85:type==='edificio'?14:type==='hotel'?12:type==='tienda'?4:5;
-  let geo,w=2.5,d=2.5;
-  if(type==='casa') geo=new THREE.BoxGeometry(w,2.85,d);
-  if(type==='edificio') geo=new THREE.BoxGeometry(3,14,3);
-  if(type==='hotel') geo=new THREE.BoxGeometry(5,12,4);
-  if(type==='tienda') geo=new THREE.BoxGeometry(3.5,4,3);
-  if(type==='restaurante') geo=new THREE.BoxGeometry(4,5,3.5);
-  let mat;
-  if(currentArch==='aleja') mat=new THREE.MeshStandardMaterial({color:0xe8ddd0,roughness:0.8});
-  if(currentArch==='andres') mat=new THREE.MeshStandardMaterial({color:0x3a3a3a,roughness:0.9,metalness:0.2});
-  if(currentArch==='diana') mat=new THREE.MeshStandardMaterial({color:0xfffaf0,roughness:0.3,metalness:0.1});
-  if(currentArch==='alfred') mat=new THREE.MeshStandardMaterial({color:0xf5e6c8,roughness:0.7});
-  if(currentArch==='diego') mat=new THREE.MeshStandardMaterial({color:0x111111,roughness:0.2,metalness:0.6});
-  const mesh=new THREE.Mesh(geo,mat);mesh.position.set(lot.position.x,h/2,lot.position.z);mesh.castShadow=true;mesh.receiveShadow=true;mesh.scale.set(0.01,0.01,0.01);
-  group.add(mesh);
-  // elevador para edificio
-  if(type==='edificio'){const elev=new THREE.Mesh(new THREE.BoxGeometry(0.6,12,0.6),new THREE.MeshStandardMaterial({color:0x5ee1ff,emissive:0x112233}));elev.position.set(lot.position.x+0.8,6,lot.position.z);group.add(elev);}
-  // andamio construccion
-  const scaffold=new THREE.Group();for(let i=0;i<4;i++){const pole=new THREE.Mesh(new THREE.CylinderGeometry(0.03,0.03,h,6),new THREE.MeshStandardMaterial({color:0xffc83d}));pole.position.set(lot.position.x+(i%2?1:-1),h/2,lot.position.z+(i>1?1:-1));scaffold.add(pole);}group.add(scaffold);
-  scene.add(group);
-  const building={mesh,group,lot,type,arch:currentArch,wallMat:mat,h,grid:lot.userData.grid};
-  buildings.push(building);currentBuilding=building;buildings[buildings.length-1].mesh=mesh;
-  // animacion construccion
-  const start=Date.now();(function grow(){const t=Math.min((Date.now()-start)/1200,1),e=1-Math.pow(1-t,3);mesh.scale.set(e,e,e);if(t<1)requestAnimationFrame(grow);else{group.remove(scaffold)}})();
-  document.getElementById('area').textContent=area.toFixed(1)+' m²';document.getElementById('costo').textContent=costo.toFixed(0)+' COP';document.getElementById('vol').textContent=vol.toFixed(0)+' m³';
-  logEl.textContent=`[CONSTRUCCION] ${type.toUpperCase()} por ${arch.name} (${arch.style})\n[DECIMALES] h=2.85m exacta\n[CUADRATICA] A(x)=-x²+${b.toFixed(0)}x=${area.toFixed(1)} max en x=${(b/2).toFixed(1)}\n[LINEAL] C=${costo.toFixed(0)}\n[VOL] V=${vol.toFixed(1)}\n[ARCO] Diego: y=-a x²+bx a=${(4*5/(x*x)).toFixed(4)}\nLote ${lot.userData.grid.x},${lot.userData.grid.z} construido. Doble click para interior.`;
+function onDbl(e){const r=renderer.domElement.getBoundingClientRect();mouse.x=((e.clientX-r.left)/r.width)*2-1;mouse.y=-((e.clientY-r.top)/r.height)*2+1;raycaster.setFromCamera(mouse,camera);const hits=raycaster.intersectObjects(builds.map(b=>b.mesh));if(hits.length){const b=builds.find(bb=>bb.mesh===hits[0].object);inside=b;document.getElementById('interior').style.display='block';document.getElementById('intTitle').textContent=b.type.toUpperCase()+' - '+ARCHS[b.arch].style;camera.position.set(b.mesh.position.x+1.2,2,b.mesh.position.z+1.2);controls.target.copy(b.mesh.position);}}
+function buildLot(lot,type){
+ if(lot.userData.built) return;lot.userData.built=true;lot.visible=false;
+ const arch=ARCHS[current];let h=type==='casa'?2.85:type==='edificio'?16:type==='hotel'?14:type==='tienda'?4:6;
+ let geo;if(type==='casa') geo=new THREE.BoxGeometry(2.8,2.85,2.8);else if(type==='edificio') geo=new THREE.BoxGeometry(3.2,h,3.2);else if(type==='hotel') geo=new THREE.BoxGeometry(5,12,4);else if(type==='tienda') geo=new THREE.BoxGeometry(3.6,4,3);else geo=new THREE.BoxGeometry(4.2,5,3.6);
+ let mat;if(current==='aleja') mat=new THREE.MeshStandardMaterial({color:0xe8ddd0,roughness:0.7});else if(current==='andres') mat=new THREE.MeshStandardMaterial({color:0x9a9a9a,metalness:0.3,roughness:0.6});else if(current==='diana') mat=new THREE.MeshStandardMaterial({color:0xfffaf0,roughness:0.25});else if(current==='alfred') mat=new THREE.MeshStandardMaterial({color:0xf5e6c8,roughness:0.65});else mat=new THREE.MeshStandardMaterial({color:0x1e1e1e,metalness:0.6,roughness:0.2});
+ const mesh=new THREE.Mesh(geo,mat);mesh.position.set(lot.position.x,h/2,lot.position.z);mesh.castShadow=true;mesh.receiveShadow=true;mesh.scale.set(0.01,0.01,0.01);
+ scene.add(mesh);
+ // ventanas
+ for(let f=0;f<h;f+=2.85){if(f>1){const win=new THREE.Mesh(new THREE.PlaneGeometry(0.6,0.6),new THREE.MeshStandardMaterial({color:0x5ee1ff,emissive:0x0a2a3a,emissiveIntensity:0.6}));win.position.set(lot.position.x+1.61,f,lot.position.z);win.rotation.y=Math.PI/2;scene.add(win);}}
+ // scaffold polvo
+ const scaffold=new THREE.Group();for(let i=0;i<4;i++){const p=new THREE.Mesh(new THREE.CylinderGeometry(0.03,0.03,h,6),new THREE.MeshStandardMaterial({color:0xffcc4d}));p.position.set(lot.position.x+(i%2?1.2:-1.2),h/2,lot.position.z+(i>1?1.2:-1.2));scaffold.add(p);}scene.add(scaffold);
+ builds.push({mesh,mat,arch:current,type,lot,h});
+ const start=Date.now();(function grow(){const t=Math.min((Date.now()-start)/1400,1),e=1-Math.pow(1-t,3);mesh.scale.set(e,e,e);if(t<1)requestAnimationFrame(grow);else{scene.remove(scaffold);}})();
+ const b=68,x=34,A=-x*x+b*x,C=A*1200+5000,V=A*2.85*3;document.getElementById('lotInfo').textContent=`LOT built: ${type} by ${arch.name} | Area ${A.toFixed(1)}m²`;
+ document.getElementById('log').textContent=`[CONSTRUCCION REALISTA] ${type.toUpperCase()} por ${arch.name} (${arch.style})\n[DECIMALES] h=2.85m exacta sin redondear\n[CUADRATICA] A(x)=-x²+${b}x=${A.toFixed(1)} max x_opt=${(b/2).toFixed(1)}\n[LINEAL] C(A)=1200A+5000=${C.toFixed(0)} COP\n[VOL] V=A*h=${V.toFixed(1)} m³\n[ARCO] Diego: y=-a x²+bx parabólico\nCrane: animación + andamio + ventanas emisivas`;
 }
-function enterInterior(building){
-  if(!building) return;
-  interiorMode=true;currentBuilding=building;interiorUI.style.display='block';document.getElementById('intTitle').textContent=`${building.type.toUpperCase()} - ${ARCHS[building.arch].style}`;
-  camera.position.set(building.mesh.position.x+1.5,2,building.mesh.position.z+1.5);controls.target.set(building.mesh.position.x,1,building.mesh.position.z);
-  // crear interior simple
-  const floor=new THREE.Mesh(new THREE.PlaneGeometry(4,4),new THREE.MeshStandardMaterial({color:0xffffff}));floor.rotation.x=-Math.PI/2;floor.position.set(building.mesh.position.x,0.1,building.mesh.position.z);floor.name='interiorFloor';scene.add(floor);
-}
-function exitInterior(){interiorMode=false;interiorUI.style.display='none';scene.children.filter(c=>c.name==='interiorFloor').forEach(c=>scene.remove(c));camera.position.set(18,18,12);controls.target.set(0,0,0);}
-function updateLog(){const b=60,x=30,A=-x*x+b*x;logEl.textContent=`SAMA Architect 2026 - Urbanismo Inteligente\nArquitecto: ${ARCHS[currentArch].name} (${ARCHS[currentArch].style})\n\n[DECIMALES] 2.85 m exacto (Aleja Japandi)\n[CUADRATICA] A(x)=-x²+${b}x=${A} (Andrés Industrial)\n[LINEAL] C=1200A+5000 (Diana Rococó)\n[VOL] V=A*h (Alfred Mediterráneo)\n[ARCO] y=-a x²+bx (Diego Contemp.)\n\nClick en lote para construir. Doble click edificio para interior.`}
-function animate(){requestAnimationFrame(animate);controls.update();renderer.render(scene,camera);}
+function drawChart(){const c=document.getElementById('chart'),ctx=c.getContext('2d');ctx.fillStyle='#0a1220';ctx.fillRect(0,0,260,80);ctx.strokeStyle='#5ee1ff';ctx.beginPath();for(let i=0;i<260;i++){const y=40+Math.sin(i/30+time)*20+Math.random()*5;if(i===0)ctx.moveTo(i,y);else ctx.lineTo(i,y);}ctx.stroke();}
+function updateLog(){document.getElementById('log').textContent=`SAMA v2.6.1 | ISOMETRIC 35°/45° | GRID ON\nArquitecto activo: ${ARCHS[current].name}\nEdad: 18-27 años | Estilo: ${ARCHS[current].style}\n\n[DECIMALES] 2.85m (Aleja cabello castaño largo)\n[CUADRATICA] -x²+bx (Andrés gorra moreno ojos claros)\n[LINEAL] 1200A+5000 (Diana castaño hombros lentes)\n[VOL] A*h (Alfred coreano largo lado)\n[ARCO] -a x²+bx (Diego corte juvenil castaño)\n\nClick lote = construir | Doble click = interior`;}
+function animate(){requestAnimationFrame(animate);time+=0.016;craneGroups.forEach((cg,i)=>{cg.userData.arm.rotation.y=Math.sin(time*0.4+i)*0.5;const hook=cg.userData.arm.getObjectByName('hook');if(hook) hook.position.y=-2-Math.abs(Math.sin(time*1.2+i))*3;});cars.forEach(c=>{c.position.x+=c.userData.speed;if(c.position.x>22)c.position.x=-22;});avatars3D.forEach((av,i)=>{av.position.y=Math.sin(time*1.5+i)*0.06;if(av.name===current){const target=new THREE.Vector3(0,0,2);av.position.lerp(target,0.01);}});drawChart();controls.update();renderer.render(scene,camera);}
 init();
 </script>
 </body>
