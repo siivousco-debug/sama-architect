@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SAMA ARCHITECT - Urbanismo Inteligente 2026</title>
+<link rel="stylesheet" href="style.css"/>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+</head>
+<body>
+<header class="topbar">
+  <div class="logo">SAMA<span>ARCHITECT</span> <small>Urbanismo Inteligente + Datos 2026</small></div>
+  <div class="metrics">
+    <div>Area: <b id="m-area">0.00</b> m2</div>
+    <div>Vol: <b id="m-vol">0.00</b> m3</div>
+    <div>Costo: <b id="m-cost">$0</b></div>
+    <div>Solar: <b id="m-solar">0%</b></div>
+  </div>
+</header>
+<div class="layout">
+  <aside class="left-panel">
+    <h3>1. Arquitecto - Estilo</h3>
+    <div class="avatars">
+      <button class="avatar active" data-arch="aleja">Aleja<br><span>Japandi</span></button>
+      <button class="avatar" data-arch="andres">Andres<br><span>Industrial</span></button>
+      <button class="avatar" data-arch="diana">Diana<br><span>Rococo</span></button>
+      <button class="avatar" data-arch="alfred">Alfred<br><span>Mediterraneo</span></button>
+      <button class="avatar" data-arch="diego">Diego<br><span>Contemporaneo</span></button>
+    </div>
+    <h3>2. Lote - Cuadratica A(x)=-x2+bx</h3>
+    <label>Ancho x (m) <input type="range" id="lot-x" min="5" max="30" step="0.05" value="15.5"><span id="lot-x-v">15.50</span></label>
+    <label>Perimetro b (m) <input type="range" id="lot-b" min="30" max="100" step="0.5" value="60"><span id="lot-b-v">60</span></label>
+    <div class="formula" id="formula-quad"></div>
+    <div class="formula">Optimo: x*=b/2 | A_max=b2/4</div>
+    <h3>3. Edificio - Decimales</h3>
+    <label>Altura entrepiso <input type="range" id="h-piso" min="2.40" max="4.5" step="0.01" value="2.85"><span id="h-piso-v">2.85</span></label>
+    <label>Pisos <input type="range" id="pisos" min="1" max="12" step="1" value="2"><span id="pisos-v">2</span></label>
+    <label>Tipo: <select id="tipo-edif">
+      <option value="casa">Casa Vivienda 3D</option>
+      <option value="edificio">Edificio + Elevador</option>
+      <option value="hotel">Hotel Lujo + Amenidades</option>
+      <option value="tienda">Tienda</option>
+      <option value="restaurante">Restaurante</option>
+      <option value="almacen">Almacen Comercio</option>
+    </select></label>
+    <h3>4. Costo - Lineal C(A)=A*Valor+Fijos</h3>
+    <label>Valor m2 <input type="range" id="valor-m2" min="800" max="2500" step="10" value="1200"><span id="valor-m2-v">1200</span></label>
+    <label>Fijos <input type="range" id="c-fijos" min="0" max="20000" step="100" value="5000"><span id="c-fijos-v">5000</span></label>
+    <div class="formula" id="formula-lineal"></div>
+    <h3>5. Arco Parabolico y=-ax2+bx</h3>
+    <label>Flecha h <input type="range" id="arco-h" min="0.5" max="6" step="0.1" value="3.2"><span id="arco-h-v">3.2</span></label>
+    <button id="btn-construir" class="primary">CONSTRUIR LOTE</button>
+    <button id="btn-interior" class="secondary">Entrar Interior</button>
+    <button id="btn-city" class="secondary">Expandir Ciudad</button>
+  </aside>
+  <main class="canvas-wrap">
+    <canvas id="c"></canvas>
+    <div id="tooltip">Three.js 2026 - Drag orbitar, scroll zoom</div>
+    <div id="construction-bar"><div id="construction-progress"></div><span>Construyendo...</span></div>
+  </main>
+  <aside class="right-panel">
+    <h3>Interior - <span id="current-style">Japandi</span></h3>
+    <label>Color Muro: <input type="color" id="color-muro" value="#f5efe6"></label>
+    <label>Luz: <input type="range" id="luz-int" min="0" max="3" step="0.1" value="1.2"></label>
+    <div class="math-log"><h4>Log Matematico</h4><pre id="math-log"></pre></div>
+    <div class="prompt-box">
+      <b>Prompt 1:</b> Actua como dev y matematico. Genera funcion JS que reciba ancho lote x y perimetro b y calcule area maxima mediante A(x)=-x2+bx. Devuelve volumen con altura decimal 2.85m.<br>Link: https://gemini.google.com/share/sama-quad<br><br>
+      <b>Prompt 2:</b> Escribe script modular Three.js que cree geometria extruida parametrizada basada en area calculada. Agrega GUI interactivo para modificar dimensiones en tiempo real y recalcular costos con C(A)=A*1200+5000.<br>Link: https://gemini.google.com/share/sama-threejs
+    </div>
+  </aside>
+</div>
+<script type="module" src="main.js"></script>
+</body>
+</html>
