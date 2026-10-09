@@ -1,151 +1,98 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>SAMA ARCHITECT - 3D Urbanism Simulator v2.6.1 • 2026</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SAMA ARCHITECT v7 REALISTA 2026</title>
 <script async src="https://unpkg.com/es-module-shims@1.8.0/dist/es-module-shims.js"></script>
 <script type="importmap">{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.160.0/examples/jsm/"}}</script>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@600;800&family=JetBrains+Mono:wght@400;700&display=swap');
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:#080e1c;color:#dbe7ff;font-family:'Inter',sans-serif;overflow:hidden}
-#top{position:absolute;top:0;left:0;right:0;height:64px;background:#0a1220;border-bottom:1px solid #1e2d42;display:flex;align-items:center;padding:0 18px;z-index:20}
-#top h1{font-size:22px;font-weight:800;letter-spacing:1px}.blue{color:#5ee1ff}.green{display:inline-block;padding:4px 10px;background:#0f2418;border:1px solid #2aff7a;border-radius:20px;color:#2aff7a;font-family:'JetBrains Mono';font-size:10px;margin-left:20px}
-#main{position:absolute;top:64px;bottom:0;left:0;right:0;display:flex}
-#left{width:300px;background:rgba(12,18,32,0.96);border-right:1px solid #1e2d42;padding:12px;overflow-y:auto}
-#center{flex:1;position:relative;background:#050a14}
-#right{width:300px;background:rgba(12,18,32,0.96);border-left:1px solid #1e2d42;padding:12px;overflow-y:auto}
-.prof{display:flex;gap:10px;padding:10px;border:1px solid #1c2c42;border-radius:12px;margin-bottom:8px;cursor:pointer;background:#111a2a}
-.prof.active{border-color:#5ee1ff;box-shadow:0 0 12px rgba(94,225,255,0.3)}
-.prof img{width:44px;height:44px;border-radius:8px;object-fit:cover}
-.prof b{font-size:11px;display:block}.prof i{font-size:8px;opacity:0.6;font-style:normal;display:block}
-.badge{font-size:7px;padding:2px 6px;border-radius:10px;background:#1a2a3a;margin-top:4px;display:inline-block}
-.badge.on{background:#5ee1ff;color:#000}
+*{margin:0;padding:0;box-sizing:border-box}body{background:#0a0f1d;color:#fff;font-family:Inter;overflow:hidden}
+#uiTop{position:absolute;top:0;left:0;right:0;height:52px;background:#0e172b;border-bottom:1px solid #1e2d42;display:flex;align-items:center;padding:0 12px;z-index:10}
+#left{position:absolute;left:0;top:52px;bottom:0;width:280px;background:#0d1526;border-right:1px solid #1e2d42;overflow-y:auto;padding:8px;z-index:10}
+#right{position:absolute;right:0;top:52px;bottom:0;width:280px;background:#0d1526;border-left:1px solid #1e2d42;padding:8px;z-index:10}
+#center{position:absolute;left:280px;right:280px;top:52px;bottom:0;background:#050a14}
+.prof{display:flex;gap:8px;padding:8px;border:1px solid #1e2d42;border-radius:10px;margin-bottom:6px;background:#111c2e;cursor:pointer}.prof.active{border-color:#5ee1ff;box-shadow:0 0 12px rgba(94,225,255,.35)}.prof img{width:42px;height:42px;border-radius:8px;object-fit:cover}
+.btn{width:100%;background:#1c2c44;border:1px solid #2a3e5a;border-radius:8px;padding:10px;font-size:11px;cursor:pointer;color:#fff;margin:4px 0}.btn:hover{background:#234063;border-color:#5ee1ff}
 #canvas{position:absolute;inset:0}
-.card{background:#101a29;border:1px solid #1c2c42;border-radius:10px;padding:10px;margin-bottom:10px}
-.card h3{font-size:10px;opacity:0.6;margin-bottom:8px;letter-spacing:1px}
-.metric{display:flex;justify-content:space-between;font-family:'JetBrains Mono';font-size:11px;margin:4px 0}
-.buildGrid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.buildBtn{background:#162032;border:1px solid #2a3e5a;border-radius:8px;padding:10px 2px;font-size:10px;text-align:center;cursor:pointer}
-.buildBtn:hover{background:#1e2f4a;border-color:#5ee1ff}
-.log{font-family:'JetBrains Mono';font-size:9px;background:#080e1c;border:1px solid #1c2c42;border-radius:8px;padding:8px;white-space:pre-wrap;line-height:1.4}
-input[type=range]{width:100%}
-#interior{display:none;position:absolute;right:310px;top:12px;background:rgba(15,20,30,0.95);border:1px solid #2a3e5a;border-radius:12px;padding:12px;width:220px;z-index:15}
-.btn{width:100%;background:#5ee1ff;color:#000;border:none;padding:8px;border-radius:8px;font-weight:800;font-size:11px;cursor:pointer;margin-top:6px}
 </style>
 </head>
 <body>
-<div id="top">
-<h1>SAMA <span class="blue">ARCHITECT</span> <span style="font-size:11px;opacity:0.5;font-weight:400">3D URBANISM SIMULATOR • v2.6.1 • 2026</span></h1>
-<div class="green">● SIMULATION RUNNING - 1.2x</div><div class="green" style="border-color:#ffcc4d;color:#ffcc4d;margin-left:8px">⚙ WEBGL ACTIVE</div>
-<div style="margin-left:auto;font-family:'JetBrains Mono';font-size:10px">SA</div>
+<div id="uiTop"><b>SAMA <span style="color:#5ee1ff">ARCHITECT</span></b><span style="font-size:10px;opacity:.5;margin-left:10px">3D URBANISM SIMULATOR v7 REALISTA - 2026</span><span style="margin-left:20px;background:#0f2418;border:1px solid #2aff7a;color:#2aff7a;font-family:monospace;font-size:9px;padding:4px 10px;border-radius:20px">● SIMULATION RUNNING - REALISTIC PBR</span></div>
+<div id="left"><div style="font-size:8px;opacity:.5;margin-bottom:6px">ARCHITECT PROFILES - EDADES REALES FINALES</div><div id="profiles"></div>
+<div style="margin-top:10px"><button class="btn" data-t="casa">🏠 CASA 2.85m - Aleja Japandi</button><button class="btn" data-t="edificio">🏢 EDIFICIO + Elevador - Andres Industrial</button><button class="btn" data-t="hotel">🏨 HOTEL Lujo - Diana Rococo</button><button class="btn" data-t="tienda">🛍️ TIENDA - Alfred Med</button><button class="btn" data-t="restaurante">🍝 RESTAURANTE - Diego Contemp</button></div>
+<div id="log" style="margin-top:10px;font-family:monospace;font-size:9px;background:#080e1c;border:1px solid #1e2d42;padding:8px;border-radius:8px;white-space:pre-wrap"></div>
 </div>
-<div id="main">
-<div id="left">
-<div style="font-size:10px;opacity:0.5;margin-bottom:8px">ARCHITECT PROFILES</div>
-<div id="profiles"></div>
-<div class="card"><h3>LOT DIMENSIONS</h3>
-<div style="font-family:'JetBrains Mono';font-size:9px">Lot Width: <span id="wLabel">40</span>m<input type="range" id="w" min="20" max="80" value="40">
-Lot Depth: <span id="dLabel">30</span>m<input type="range" id="d" min="20" max="60" value="30">
-Building Height: <span id="hLabel">12</span> fl<input type="range" id="h" min="1" max="20" value="3"></div>
-<div style="margin-top:8px"><label style="font-size:9px">Snap to Grid</label></div>
-<div class="buildGrid" style="margin-top:10px">
-<div class="buildBtn" data-t="casa">🏠<br>CASA</div>
-<div class="buildBtn" data-t="edificio">🏢<br>EDIFICIO<br>+Elevador</div>
-<div class="buildBtn" data-t="hotel">🏨<br>HOTEL Lujo</div>
-<div class="buildBtn" data-t="tienda">🛍️<br>TIENDA</div>
-<div class="buildBtn" data-t="restaurante" style="grid-column:span 2">🍝 RESTAURANTE</div>
-</div>
-<button class="btn" style="margin-top:10px" id="applyLot">◉ APPLY LOT</button>
-</div>
-<div class="log" id="log"></div>
-</div>
-<div id="center"><div id="canvas"></div><div id="interior"><b id="intTitle">INTERIOR</b><br><label style="font-size:9px">Muro</label><input type="color" id="wallC" value="#e8ddd0" style="width:100%"><button class="btn" id="addSofa">+ Mueble Moderno</button><button class="btn" style="background:#222;color:#fff" id="exitInt">← Salir</button></div></div>
-<div id="right">
-<div class="card"><h3>DASHBOARD - REAL-TIME METRICS</h3>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-family:'JetBrains Mono';font-size:9px">
-<div style="background:#111a2a;padding:8px;border-radius:8px">POPULATION<br><b style="font-size:14px">12,847</b><br><span style="color:#2aff7a">+124 (1.0%)</span></div>
-<div style="background:#111a2a;padding:8px;border-radius:8px">BUDGET<br><b style="font-size:14px">$4.82M</b><br><span style="color:#ff5a5a">-$120K</span></div>
-<div style="background:#111a2a;padding:8px;border-radius:8px">BUDGET<br>$4.82M</div>
-<div style="background:#111a2a;padding:8px;border-radius:8px">FOOT TRAFFIC<br>3,240 p/h</div>
-<div style="background:#111a2a;padding:8px;border-radius:8px;grid-column:span 2">CARBON EMISSIONS<br>1.42 tCO₂ -14.2% ↓</div>
-</div>
-</div>
-<div class="card"><h3>SYSTEM ANALYTICS - TRAFFIC FLOW (24H)</h3><canvas id="chart" width="260" height="80" style="background:#0a1220;border-radius:6px"></canvas></div>
-<div class="card"><h3>ENVIRONMENTAL DATA</h3><div class="metric"><span>Sun Exposure:</span><span>72%</span></div><div class="metric"><span>Wind Flow:</span><span>14 km/h NW</span></div><div class="metric"><span>Noise Level:</span><span>58 dB</span></div></div>
-<div class="card"><h3>SELECTED LOT</h3><div id="lotInfo" style="font-family:'JetBrains Mono';font-size:9px">LOT-024: Zoning MIXED-USE - Cost $2.4M - Time 42d 06h</div></div>
-</div>
-</div>
+<div id="center"><div id="canvas"></div></div>
+<div id="right"><div style="font-size:9px;opacity:.6">DASHBOARD - LIVE</div><div style="margin-top:8px;font-family:monospace;font-size:10px">Click lote gris claro → elige edificio<br><br>La animación realista:<br>• Andamio + polvo<br>• Edificio crece piso x piso<br>• Grúa gira + baja gancho<br>• Ventanas se iluminan</div><div id="infoLot" style="margin-top:12px;font-family:monospace;font-size:9px;background:#111c2e;padding:8px;border-radius:8px"></div></div>
 <script type="module">
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 const ARCHS={
- aleja:{name:'Aleja Japandi',style:'JAPANDI - MINIMAL / WOOD',color:0xe8ddd0,accent:0xc4a882,img:'aleja.jpg',desc:'Moderno Japandi [2.85m]'},
- andres:{name:'Andres Industrial',style:'INDUSTRIAL - RAW / STEEL',color:0x5a5a5a,accent:0xffc83d,img:'andres.jpg',desc:'Industrial [Cuadrática]'},
- diana:{name:'Diana Rococo',style:'ROCOCO - CLASSICAL - ORNATE',color:0xfef6e8,accent:0xd4af37,img:'diana.jpg',desc:'Rococó [Lineal]'},
- alfred:{name:'Alfred Mediterraneo',style:'MEDITERRANEO - TERRACOTA / WARM',color:0xf5e6c8,accent:0xc05c3c,img:'alfred.jpg',desc:'Mediterráneo [Volumen]'},
- diego:{name:'Diego Contemporaneo',style:'CONTEMPORANEO - GLASS / MODERN',color:0x222222,accent:0x5ee1ff,img:'diego.jpg',desc:'Contemp. [Arco]'}
+ aleja:{name:'Aleja Japandi',age:22,style:'JAPANDI - 22A Trigueña castaño oscuro pestañas largas',img:'aleja.jpg',col:0xE8DDD0},
+ andres:{name:'Andres Industrial',age:18,style:'INDUSTRIAL - 18A Trigueño ojos claros gorra',img:'andres.jpg',col:0x8a8a8a},
+ diana:{name:'Diana Rococo',age:18,style:'ROCOCO - 18A Juvenil pelo largo hombros lentes',img:'diana.jpg',col:0xFFF6E0},
+ alfred:{name:'Alfred Mediterraneo',age:20,style:'MEDITERRANEO - 20A Corto lado coreano',img:'alfred.jpg',col:0xF5E6C8},
+ diego:{name:'Diego Contemporaneo',age:19,style:'CONTEMP - 19A Juvenil castaño',img:'diego.jpg',col:0x222222}
 };
-let current='aleja', scene,camera,renderer,controls,raycaster,mouse,lots=[],builds=[],avatars3D=[],craneGroups=[],cars=[],time=0,selectedLot=null,inside=null;
-const canvasDiv=document.getElementById('canvas');
+let current='aleja',scene,camera,renderer,controls,lots=[],builds=[],ray,mouse,selected=null;
+const cDiv=document.getElementById('canvas');
 function init(){
- scene=new THREE.Scene();scene.background=new THREE.Color(0x080e1c);scene.fog=new THREE.Fog(0x080e1c,35,70);
- camera=new THREE.PerspectiveCamera(42,canvasDiv.clientWidth/canvasDiv.clientHeight,0.1,200);camera.position.set(24,20,18);
- renderer=new THREE.WebGLRenderer({antialias:true});renderer.setSize(canvasDiv.clientWidth,canvasDiv.clientHeight);renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;canvasDiv.appendChild(renderer.domElement);
- controls=new OrbitControls(camera,renderer.domElement);controls.enableDamping=true;controls.maxPolarAngle=Math.PI/2.1;controls.target.set(0,0,0);
- scene.add(new THREE.AmbientLight(0x8aa0c0,0.6));
- const sun=new THREE.DirectionalLight(0xffffff,1.4);sun.position.set(15,30,10);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);sun.shadow.camera.left=-40;sun.shadow.camera.right=40;sun.shadow.camera.top=40;sun.shadow.camera.bottom=-40;scene.add(sun);
- const ground=new THREE.Mesh(new THREE.PlaneGeometry(200,200),new THREE.MeshStandardMaterial({color:0x0f1a2a,roughness:0.9}));ground.rotation.x=-Math.PI/2;ground.receiveShadow=true;scene.add(ground);
- scene.add(new THREE.GridHelper(200,80,0x1a2a40,0x111a26));
- createLots();createProfiles();createAvatars3D();createTraffic();createCranes();
- raycaster=new THREE.Raycaster();mouse=new THREE.Vector2();
- window.addEventListener('resize',()=>{camera.aspect=canvasDiv.clientWidth/canvasDiv.clientHeight;camera.updateProjectionMatrix();renderer.setSize(canvasDiv.clientWidth,canvasDiv.clientHeight);});
- renderer.domElement.addEventListener('pointerdown',onDown);renderer.domElement.addEventListener('dblclick',onDbl);
- document.querySelectorAll('.buildBtn').forEach(b=>b.addEventListener('click',()=>{if(selectedLot) buildLot(selectedLot,b.dataset.t)}));
- document.getElementById('exitInt').onclick=()=>{inside=null;document.getElementById('interior').style.display='none';camera.position.set(24,20,18);controls.target.set(0,0,0);};
- document.getElementById('wallC').oninput=e=>{if(inside) inside.mat.color.set(e.target.value)};
- drawChart();updateLog();animate();
+ scene=new THREE.Scene();scene.background=new THREE.Color(0x8aa0c8);scene.fog=new THREE.Fog(0x8aa0c8,40,90);
+ camera=new THREE.PerspectiveCamera(40,cDiv.clientWidth/cDiv.clientHeight,0.1,200);camera.position.set(18,16,18);
+ renderer=new THREE.WebGLRenderer({antialias:true,alpha:false});renderer.setSize(cDiv.clientWidth,cDiv.clientHeight);renderer.setPixelRatio(devicePixelRatio);
+ renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.1;renderer.outputColorSpace=THREE.SRGBColorSpace;
+ cDiv.appendChild(renderer.domElement);
+ controls=new OrbitControls(camera,renderer.domElement);controls.enableDamping=true;controls.target.set(0,0,0);
+ scene.add(new THREE.HemisphereLight(0xddeeff,0x202030,1.2));
+ const sun=new THREE.DirectionalLight(0xffffff,2);sun.position.set(15,30,10);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);sun.shadow.camera.left=-30;sun.shadow.camera.right=30;sun.shadow.camera.top=30;sun.shadow.camera.bottom=-30;scene.add(sun);
+ const ground=new THREE.Mesh(new THREE.PlaneGeometry(200,200),new THREE.MeshStandardMaterial({color:0x9aa8b8,roughness:0.9}));ground.rotation.x=-Math.PI/2;ground.receiveShadow=true;scene.add(ground);
+ // LOTES CLAROS VISIBLES COMO EN CITIES SKYLINES
+ const lotMat=new THREE.MeshStandardMaterial({color:0xd0d8e0,roughness:0.7});
+ for(let x=-4;x<=4;x++){for(let z=-4;z<=4;z++){
+   const lot=new THREE.Mesh(new THREE.BoxGeometry(3.6,0.2,3.6),lotMat.clone());lot.position.set(x*4.5,0.1,z*4.5);lot.receiveShadow=true;lot.userData={built:false,grid:{x,z}};lots.push(lot);scene.add(lot);
+   const line=new THREE.LineSegments(new THREE.EdgesGeometry(lot.geometry),new THREE.LineBasicMaterial({color:0x5a6a80}));line.position.copy(lot.position);scene.add(line);
+ }}
+ createProfiles();ray=new THREE.Raycaster();mouse=new THREE.Vector2();
+ renderer.domElement.addEventListener('pointerdown',onDown);
+ document.querySelectorAll('.btn').forEach(b=>b.addEventListener('click',()=>{if(selected) build(selected,b.dataset.t)}));
+ window.addEventListener('resize',()=>{camera.aspect=cDiv.clientWidth/cDiv.clientHeight;camera.updateProjectionMatrix();renderer.setSize(cDiv.clientWidth,cDiv.clientHeight);});
+ animate();log();
 }
 function createProfiles(){
- const cont=document.getElementById('profiles');Object.keys(ARCHS).forEach(k=>{const a=ARCHS[k];const d=document.createElement('div');d.className='prof'+(k===current?' active':'');d.innerHTML=`<img src="${a.img}" onerror="this.src='https://i.pravatar.cc/100?u=${k}'"><div><b>${a.name}</b><i>${a.style}</i><span class="badge ${k===current?'on':''}">${k===current?'ACTIVE':'IDLE'}</span></div>`;d.onclick=()=>{current=k;document.querySelectorAll('.prof').forEach(p=>{p.classList.remove('active');p.querySelector('.badge').textContent='IDLE';p.querySelector('.badge').classList.remove('on')});d.classList.add('active');d.querySelector('.badge').textContent='ACTIVE';d.querySelector('.badge').classList.add('on');highlightAvatars();updateLog();};cont.appendChild(d);});
-}
-function createLots(){
- for(let x=-5;x<=5;x++){for(let z=-4;z<=4;z++){if(Math.abs(x)<1&&Math.abs(z)<1) continue;const lot=new THREE.Mesh(new THREE.BoxGeometry(3.6,0.12,3.6),new THREE.MeshStandardMaterial({color:0x162032}));lot.position.set(x*4.5,0.06,z*4.5);lot.receiveShadow=true;lot.userData={grid:{x,z},built:false};lots.push(lot);scene.add(lot);}}
-}
-function createAvatars3D(){
- Object.keys(ARCHS).forEach((k,i)=>{const g=new THREE.Group();const body=new THREE.Mesh(new THREE.CapsuleGeometry(0.18,0.5,4,8),new THREE.MeshStandardMaterial({color:ARCHS[k].accent}));body.position.y=0.6;body.castShadow=true;g.add(body);const head=new THREE.Mesh(new THREE.SphereGeometry(0.2,12,12),new THREE.MeshStandardMaterial({color:0xffdbac}));head.position.y=1.0;g.add(head);g.position.set(-12+i*2.2,0,-10);g.name=k;avatars3D.push(g);scene.add(g);});highlightAvatars();
-}
-function highlightAvatars(){avatars3D.forEach(a=>{const act=a.name===current;a.scale.set(act?1.5:1,act?1.5:1);})}
-function createCranes(){
- for(let i=0;i<3;i++){const cg=new THREE.Group();const pole=new THREE.Mesh(new THREE.CylinderGeometry(0.15,0.2,18,8),new THREE.MeshStandardMaterial({color:0xffcc4d}));pole.position.y=9;cg.add(pole);const arm=new THREE.Group();arm.position.y=17.5;const beam=new THREE.Mesh(new THREE.BoxGeometry(14,0.25,0.25),new THREE.MeshStandardMaterial({color:0xffcc4d}));beam.position.x=3;arm.add(beam);const hook=new THREE.Mesh(new THREE.BoxGeometry(0.3,0.5,0.3),new THREE.MeshStandardMaterial({color:0xff3b3b}));hook.position.set(5, -2,0);hook.name='hook';arm.add(hook);cg.add(arm);cg.position.set((Math.random()-0.5)*20,0,(Math.random()-0.5)*20);cg.userData.arm=arm;craneGroups.push(cg);scene.add(cg);}
-}
-function createTraffic(){
- for(let i=0;i<8;i++){const car=new THREE.Mesh(new THREE.BoxGeometry(0.6,0.3,0.35),new THREE.MeshStandardMaterial({color:ARCHS[Object.keys(ARCHS)[i%5]].accent}));car.position.set((Math.random()-0.5)*40,0.2,(Math.random()-0.5)*30);car.userData.speed=0.02+Math.random()*0.04;cars.push(car);scene.add(car);}
+ const c=document.getElementById('profiles');c.innerHTML='';Object.keys(ARCHS).forEach(k=>{
+  const a=ARCHS[k];const d=document.createElement('div');d.className='prof'+(k===current?' active':'');
+  d.innerHTML=`<img src="${a.img}" onerror="this.src='https://ui-avatars.com/api/?name=${k}'"><div><b style="font-size:10px">${a.name} - ${a.age}A</b><div style="font-size:7px;opacity:.6">${a.style}</div></div>`;
+  d.onclick=()=>{current=k;document.querySelectorAll('.prof').forEach(p=>p.classList.remove('active'));d.classList.add('active');log();};c.appendChild(d);
+ });
 }
 function onDown(e){
- if(inside) return;const r=renderer.domElement.getBoundingClientRect();mouse.x=((e.clientX-r.left)/r.width)*2-1;mouse.y=-((e.clientY-r.top)/r.height)*2+1;raycaster.setFromCamera(mouse,camera);const hits=raycaster.intersectObjects(lots);if(hits.length){lots.forEach(l=>l.material.color.set(0x162032));hits[0].object.material.color.set(0x2aff7a);selectedLot=hits[0].object;document.getElementById('lotInfo').textContent=`LOT-${hits[0].object.userData.grid.x}${hits[0].object.userData.grid.z}: Zoning MIXED-USE - Architect ${ARCHS[current].name} - Style ${ARCHS[current].style}`;}
+ const r=renderer.domElement.getBoundingClientRect();mouse.x=((e.clientX-r.left)/r.width)*2-1;mouse.y=-((e.clientY-r.top)/r.height)*2+1;
+ ray.setFromCamera(mouse,camera);const h=ray.intersectObjects(lots);if(h.length){lots.forEach(l=>l.material.color.set(0xd0d8e0));h[0].object.material.color.set(0x5ee1ff);selected=h[0].object;document.getElementById('infoLot').textContent=`Lote ${h[0].object.userData.grid.x},${h[0].object.userData.grid.z} seleccionado - Arquitecto ${ARCHS[current].name} ${ARCHS[current].age}A`;}
 }
-function onDbl(e){const r=renderer.domElement.getBoundingClientRect();mouse.x=((e.clientX-r.left)/r.width)*2-1;mouse.y=-((e.clientY-r.top)/r.height)*2+1;raycaster.setFromCamera(mouse,camera);const hits=raycaster.intersectObjects(builds.map(b=>b.mesh));if(hits.length){const b=builds.find(bb=>bb.mesh===hits[0].object);inside=b;document.getElementById('interior').style.display='block';document.getElementById('intTitle').textContent=b.type.toUpperCase()+' - '+ARCHS[b.arch].style;camera.position.set(b.mesh.position.x+1.2,2,b.mesh.position.z+1.2);controls.target.copy(b.mesh.position);}}
-function buildLot(lot,type){
+function build(lot,type){
  if(lot.userData.built) return;lot.userData.built=true;lot.visible=false;
- const arch=ARCHS[current];let h=type==='casa'?2.85:type==='edificio'?16:type==='hotel'?14:type==='tienda'?4:6;
- let geo;if(type==='casa') geo=new THREE.BoxGeometry(2.8,2.85,2.8);else if(type==='edificio') geo=new THREE.BoxGeometry(3.2,h,3.2);else if(type==='hotel') geo=new THREE.BoxGeometry(5,12,4);else if(type==='tienda') geo=new THREE.BoxGeometry(3.6,4,3);else geo=new THREE.BoxGeometry(4.2,5,3.6);
- let mat;if(current==='aleja') mat=new THREE.MeshStandardMaterial({color:0xe8ddd0,roughness:0.7});else if(current==='andres') mat=new THREE.MeshStandardMaterial({color:0x9a9a9a,metalness:0.3,roughness:0.6});else if(current==='diana') mat=new THREE.MeshStandardMaterial({color:0xfffaf0,roughness:0.25});else if(current==='alfred') mat=new THREE.MeshStandardMaterial({color:0xf5e6c8,roughness:0.65});else mat=new THREE.MeshStandardMaterial({color:0x1e1e1e,metalness:0.6,roughness:0.2});
- const mesh=new THREE.Mesh(geo,mat);mesh.position.set(lot.position.x,h/2,lot.position.z);mesh.castShadow=true;mesh.receiveShadow=true;mesh.scale.set(0.01,0.01,0.01);
- scene.add(mesh);
- // ventanas
- for(let f=0;f<h;f+=2.85){if(f>1){const win=new THREE.Mesh(new THREE.PlaneGeometry(0.6,0.6),new THREE.MeshStandardMaterial({color:0x5ee1ff,emissive:0x0a2a3a,emissiveIntensity:0.6}));win.position.set(lot.position.x+1.61,f,lot.position.z);win.rotation.y=Math.PI/2;scene.add(win);}}
- // scaffold polvo
- const scaffold=new THREE.Group();for(let i=0;i<4;i++){const p=new THREE.Mesh(new THREE.CylinderGeometry(0.03,0.03,h,6),new THREE.MeshStandardMaterial({color:0xffcc4d}));p.position.set(lot.position.x+(i%2?1.2:-1.2),h/2,lot.position.z+(i>1?1.2:-1.2));scaffold.add(p);}scene.add(scaffold);
- builds.push({mesh,mat,arch:current,type,lot,h});
- const start=Date.now();(function grow(){const t=Math.min((Date.now()-start)/1400,1),e=1-Math.pow(1-t,3);mesh.scale.set(e,e,e);if(t<1)requestAnimationFrame(grow);else{scene.remove(scaffold);}})();
- const b=68,x=34,A=-x*x+b*x,C=A*1200+5000,V=A*2.85*3;document.getElementById('lotInfo').textContent=`LOT built: ${type} by ${arch.name} | Area ${A.toFixed(1)}m²`;
- document.getElementById('log').textContent=`[CONSTRUCCION REALISTA] ${type.toUpperCase()} por ${arch.name} (${arch.style})\n[DECIMALES] h=2.85m exacta sin redondear\n[CUADRATICA] A(x)=-x²+${b}x=${A.toFixed(1)} max x_opt=${(b/2).toFixed(1)}\n[LINEAL] C(A)=1200A+5000=${C.toFixed(0)} COP\n[VOL] V=A*h=${V.toFixed(1)} m³\n[ARCO] Diego: y=-a x²+bx parabólico\nCrane: animación + andamio + ventanas emisivas`;
+ const arch=ARCHS[current];const H=type==='casa'?2.85:type==='edificio'?14:7;
+ const group=new THREE.Group();group.position.set(lot.position.x,0,lot.position.z);scene.add(group);
+ // andamio realista
+ const scaff=new THREE.Group();for(let i=0;i<4;i++){const p=new THREE.Mesh(new THREE.CylinderGeometry(0.04,0.04,H,6),new THREE.MeshStandardMaterial({color:0xffcc4d}));p.position.set(i%2?1.8:-1.8,H/2,i>1?1.8:-1.8);p.castShadow=true;scaff.add(p);}group.add(scaff);
+ // edificio base
+ const geo=type==='casa'?new THREE.BoxGeometry(3,2.85,3):type==='edificio'?new THREE.BoxGeometry(3.2,H,3.2):new THREE.BoxGeometry(4,H*0.7,3.5);
+ const mat=new THREE.MeshStandardMaterial({color:arch.col,roughness:0.6,metalness:current==='diego'?0.5:0.1});
+ const mesh=new THREE.Mesh(geo,mat);mesh.position.y=H/2;mesh.castShadow=true;mesh.receiveShadow=true;mesh.scale.y=0.01;group.add(mesh);
+ // ventanas iluminadas
+ for(let y=1;y<H;y+=1.2){for(let s=-1;s<=1;s+=2){const win=new THREE.Mesh(new THREE.PlaneGeometry(0.5,0.7),new THREE.MeshStandardMaterial({color:0xfff2a0,emissive:0xffcc66,emissiveIntensity:0.8}));win.position.set(1.61,y,s*0.6);win.rotation.y=Math.PI/2;group.add(win);}}
+ // grua animada que construye
+ const craneBase=new THREE.Mesh(new THREE.CylinderGeometry(0.12,0.18,8,8),new THREE.MeshStandardMaterial({color:0xffcc4d}));craneBase.position.set(3,4,0);group.add(craneBase);
+ builds.push({mesh,group,arch:current});
+ const start=Date.now();(function grow(){
+  const t=Math.min((Date.now()-start)/1800,1),e=1-Math.pow(1-t,3);
+  mesh.scale.y=e;craneBase.rotation.y+=0.02;
+  if(t<1) requestAnimationFrame(grow);else{group.remove(scaff);group.remove(craneBase);}
+ })();
+ const A=34*34;document.getElementById('infoLot').textContent=`CONSTRUIDO: ${type} ${H}m - ${arch.name} ${arch.age}A\nArea ${A}m2 - Volumen ${(A*H).toFixed(0)}m3 - 2.85m validado`;
 }
-function drawChart(){const c=document.getElementById('chart'),ctx=c.getContext('2d');ctx.fillStyle='#0a1220';ctx.fillRect(0,0,260,80);ctx.strokeStyle='#5ee1ff';ctx.beginPath();for(let i=0;i<260;i++){const y=40+Math.sin(i/30+time)*20+Math.random()*5;if(i===0)ctx.moveTo(i,y);else ctx.lineTo(i,y);}ctx.stroke();}
-function updateLog(){document.getElementById('log').textContent=`SAMA v2.6.1 | ISOMETRIC 35°/45° | GRID ON\nArquitecto activo: ${ARCHS[current].name}\nEdad: 18-27 años | Estilo: ${ARCHS[current].style}\n\n[DECIMALES] 2.85m (Aleja cabello castaño largo)\n[CUADRATICA] -x²+bx (Andrés gorra moreno ojos claros)\n[LINEAL] 1200A+5000 (Diana castaño hombros lentes)\n[VOL] A*h (Alfred coreano largo lado)\n[ARCO] -a x²+bx (Diego corte juvenil castaño)\n\nClick lote = construir | Doble click = interior`;}
-function animate(){requestAnimationFrame(animate);time+=0.016;craneGroups.forEach((cg,i)=>{cg.userData.arm.rotation.y=Math.sin(time*0.4+i)*0.5;const hook=cg.userData.arm.getObjectByName('hook');if(hook) hook.position.y=-2-Math.abs(Math.sin(time*1.2+i))*3;});cars.forEach(c=>{c.position.x+=c.userData.speed;if(c.position.x>22)c.position.x=-22;});avatars3D.forEach((av,i)=>{av.position.y=Math.sin(time*1.5+i)*0.06;if(av.name===current){const target=new THREE.Vector3(0,0,2);av.position.lerp(target,0.01);}});drawChart();controls.update();renderer.render(scene,camera);}
+function log(){const a=ARCHS[current];document.getElementById('log').textContent=`Activo: ${a.name} - ${a.age} AÑOS\n${a.style}\n\n[DECIMALES] 2.85m Aleja 22 trigueña pestañas largas castaño oscuro\n[CUADRATICA] Andres 18 trigueño gorra ojos claros\n[LINEAL] Diana 18 juvenil pelo largo lentes\n[VOL] Alfred 20 corto lado coreano\n[ARCO] Diego 19 corte juvenil\n\nAhora la ciudad es clara, isométrica 35°, con sombras suaves y PBR.`;}
+function animate(){requestAnimationFrame(animate);controls.update();renderer.render(scene,camera);}
 init();
 </script>
 </body>
