@@ -2,96 +2,104 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>SAMA ARCHITECT v7 REALISTA 2026</title>
+<title>SAMA ARCHITECT v8 INTERACTIVO PRO 2026</title>
 <script async src="https://unpkg.com/es-module-shims@1.8.0/dist/es-module-shims.js"></script>
 <script type="importmap">{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.160.0/examples/jsm/"}}</script>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}body{background:#0a0f1d;color:#fff;font-family:Inter;overflow:hidden}
-#uiTop{position:absolute;top:0;left:0;right:0;height:52px;background:#0e172b;border-bottom:1px solid #1e2d42;display:flex;align-items:center;padding:0 12px;z-index:10}
-#left{position:absolute;left:0;top:52px;bottom:0;width:280px;background:#0d1526;border-right:1px solid #1e2d42;overflow-y:auto;padding:8px;z-index:10}
-#right{position:absolute;right:0;top:52px;bottom:0;width:280px;background:#0d1526;border-left:1px solid #1e2d42;padding:8px;z-index:10}
-#center{position:absolute;left:280px;right:280px;top:52px;bottom:0;background:#050a14}
-.prof{display:flex;gap:8px;padding:8px;border:1px solid #1e2d42;border-radius:10px;margin-bottom:6px;background:#111c2e;cursor:pointer}.prof.active{border-color:#5ee1ff;box-shadow:0 0 12px rgba(94,225,255,.35)}.prof img{width:42px;height:42px;border-radius:8px;object-fit:cover}
-.btn{width:100%;background:#1c2c44;border:1px solid #2a3e5a;border-radius:8px;padding:10px;font-size:11px;cursor:pointer;color:#fff;margin:4px 0}.btn:hover{background:#234063;border-color:#5ee1ff}
-#canvas{position:absolute;inset:0}
+*{margin:0;padding:0;box-sizing:border-box}body{background:#080d1a;color:#d0d8e6;font-family:Inter,system-ui;overflow:hidden}
+#top{position:absolute;top:0;left:0;right:0;height:48px;background:#0e172b;display:flex;align-items:center;padding:0 14px;z-index:20;border-bottom:1px solid #1e2d42}
+#left{position:absolute;left:0;top:48px;bottom:0;width:280px;background:#0d1526;border-right:1px solid #1e2d42;overflow-y:auto;padding:8px;z-index:10}
+#right{position:absolute;right:0;top:48px;bottom:0;width:300px;background:#0d1526;border-left:1px solid #1e2d42;overflow-y:auto;padding:8px;z-index:10}
+#center{position:absolute;left:280px;right:300px;top:48px;bottom:0;background:#6e7e94}
+.prof{display:flex;gap:8px;padding:8px;border:1px solid #1e2d42;border-radius:10px;margin-bottom:6px;background:#111c2e;cursor:pointer;transition:.2s}.prof:hover{border-color:#3a5a7a}.prof.active{border-color:#5ee1ff;box-shadow:0 0 12px rgba(94,225,255,.35)}.prof img{width:42px;height:42px;border-radius:8px;object-fit:cover}
+.btn{width:100%;background:#162032;border:1px solid #2a3e5a;border-radius:8px;padding:11px;font-size:11px;cursor:pointer;color:#fff;margin:4px 0;text-align:left}.btn:hover{background:#1e3456;border-color:#5ee1ff;transform:translateX(2px)}.btn.active{border-color:#5ee1ff;background:#1a3a5a}
+.card{background:#111c2e;border:1px solid #1e2d42;border-radius:10px;padding:10px;margin-bottom:8px}.card h3{font-size:9px;opacity:.5;letter-spacing:1px;margin-bottom:8px}
+#canvas{position:absolute;inset:0;cursor:grab}#canvas:active{cursor:grabbing}
+#interiorPanel{position:absolute;right:310px;top:60px;width:210px;background:rgba(13,21,38,.96);border:1px solid #2a3e5a;border-radius:12px;padding:12px;display:none;z-index:15}
 </style>
 </head>
 <body>
-<div id="uiTop"><b>SAMA <span style="color:#5ee1ff">ARCHITECT</span></b><span style="font-size:10px;opacity:.5;margin-left:10px">3D URBANISM SIMULATOR v7 REALISTA - 2026</span><span style="margin-left:20px;background:#0f2418;border:1px solid #2aff7a;color:#2aff7a;font-family:monospace;font-size:9px;padding:4px 10px;border-radius:20px">● SIMULATION RUNNING - REALISTIC PBR</span></div>
-<div id="left"><div style="font-size:8px;opacity:.5;margin-bottom:6px">ARCHITECT PROFILES - EDADES REALES FINALES</div><div id="profiles"></div>
-<div style="margin-top:10px"><button class="btn" data-t="casa">🏠 CASA 2.85m - Aleja Japandi</button><button class="btn" data-t="edificio">🏢 EDIFICIO + Elevador - Andres Industrial</button><button class="btn" data-t="hotel">🏨 HOTEL Lujo - Diana Rococo</button><button class="btn" data-t="tienda">🛍️ TIENDA - Alfred Med</button><button class="btn" data-t="restaurante">🍝 RESTAURANTE - Diego Contemp</button></div>
-<div id="log" style="margin-top:10px;font-family:monospace;font-size:9px;background:#080e1c;border:1px solid #1e2d42;padding:8px;border-radius:8px;white-space:pre-wrap"></div>
+<div id="top"><b>SAMA <span style="color:#5ee1ff">ARCHITECT</span> <span style="font-size:10px;opacity:.5;font-weight:400">3D URBANISM SIMULATOR v8 INTERACTIVO • 2026</span></b><span style="margin-left:18px;background:#0f2418;border:1px solid #2aff7a;color:#2aff7a;font-family:monospace;font-size:9px;padding:4px 10px;border-radius:20px">● SIMULATION RUNNING</span><span style="margin-left:6px;background:#1a1a0e;border:1px solid #ffcc4d;color:#ffcc4d;font-family:monospace;font-size:9px;padding:4px 10px;border-radius:20px">◉ WEBGL2 ACTIVE</span><div style="margin-left:auto;font-size:9px;opacity:.5">SA • INTERACTIVE MODE</div></div>
+
+<div id="left"><div style="font-size:8px;opacity:.4;margin-bottom:6px">ARCHITECT PROFILES</div><div id="profiles"></div>
+<div class="card"><h3>BUILDING CATALOG</h3>
+<button class="btn" data-t="casa">🏠 CASA • 2.85m exactos • Japandi</button>
+<button class="btn" data-t="edificio">🏢 EDIFICIO 14fl + Elevador • Industrial</button>
+<button class="btn" data-t="hotel">🏨 HOTEL Lujo • Rococó</button>
+<button class="btn" data-t="tienda">🛍️ TIENDA • Mediterráneo</button>
+<button class="btn" data-t="restaurante">🍝 RESTAURANTE • Contemporáneo</button>
+<div style="font-size:8px;opacity:.4;margin-top:10px">TIP: Hover lote • Click seleccionar • Rueda = altura • Doble click = interior • Click derecho = demoler</div>
+</div></div>
+
+<div id="center"><div id="canvas"></div><div id="interiorPanel"><b id="intTitle" style="font-size:11px">INTERIOR MODE</b><div style="font-size:9px;opacity:.6;margin-top:6px">Personalización interior</div><input type="color" id="wallC" value="#e8ddd0" style="width:100%;margin-top:8px"><button class="btn" id="addSofa">+ Sofá Japandi</button><button class="btn" id="addTable">+ Mesa Centro</button><button class="btn" style="background:#2a1a1a" id="exitInt">← Salir interior</button></div></div>
+
+<div id="right">
+<div class="card"><h3>DASHBOARD - REAL-TIME METRICS</h3><div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-family:monospace;font-size:9px">
+<div style="background:#0a1220;padding:8px;border-radius:8px">POPULATION<br><b style="font-size:14px;color:#fff" id="pop">12,847</b><br><span style="color:#2aff7a" id="popD">+124 (1.0%)</span></div>
+<div style="background:#0a1220;padding:8px;border-radius:8px">BUDGET<br><b style="font-size:14px;color:#fff">$4.82M</b><br><span style="color:#ff5a5a">-$120K</span></div>
+<div style="background:#0a1220;padding:8px;border-radius:8px">FOOT TRAFFIC<br><b id="foot">3,240 p/h</b></div>
+<div style="background:#0a1220;padding:8px;border-radius:8px">CARBON<br><b>1.42 tCO₂</b><br><span style="color:#2aff7a">-14.2% ↓</span></div>
+</div></div>
+<div class="card"><h3>SYSTEM ANALYTICS - TRAFFIC FLOW (24H)</h3><canvas id="chart" width="280" height="70" style="background:#0a1220;border-radius:6px;width:100%"></canvas></div>
+<div class="card"><h3>ENVIRONMENTAL DATA</h3><div style="font-family:monospace;font-size:9px"><div style="display:flex;justify-content:space-between;margin:4px 0"><span>Sun Exposure:</span><span>72%</span></div><div style="display:flex;justify-content:space-between;margin:4px 0"><span>Wind Flow:</span><span>14 km/h NW</span></div><div style="display:flex;justify-content:space-between;margin:4px 0"><span>Noise Level:</span><span>58 dB</span></div></div></div>
+<div class="card"><h3>SELECTED LOT</h3><div id="lotInfo" style="font-family:monospace;font-size:9px">Ningún lote seleccionado</div></div>
 </div>
-<div id="center"><div id="canvas"></div></div>
-<div id="right"><div style="font-size:9px;opacity:.6">DASHBOARD - LIVE</div><div style="margin-top:8px;font-family:monospace;font-size:10px">Click lote gris claro → elige edificio<br><br>La animación realista:<br>• Andamio + polvo<br>• Edificio crece piso x piso<br>• Grúa gira + baja gancho<br>• Ventanas se iluminan</div><div id="infoLot" style="margin-top:12px;font-family:monospace;font-size:9px;background:#111c2e;padding:8px;border-radius:8px"></div></div>
+
 <script type="module">
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 const ARCHS={
- aleja:{name:'Aleja Japandi',age:22,style:'JAPANDI - 22A Trigueña castaño oscuro pestañas largas',img:'aleja.jpg',col:0xE8DDD0},
- andres:{name:'Andres Industrial',age:18,style:'INDUSTRIAL - 18A Trigueño ojos claros gorra',img:'andres.jpg',col:0x8a8a8a},
- diana:{name:'Diana Rococo',age:18,style:'ROCOCO - 18A Juvenil pelo largo hombros lentes',img:'diana.jpg',col:0xFFF6E0},
- alfred:{name:'Alfred Mediterraneo',age:20,style:'MEDITERRANEO - 20A Corto lado coreano',img:'alfred.jpg',col:0xF5E6C8},
- diego:{name:'Diego Contemporaneo',age:19,style:'CONTEMP - 19A Juvenil castaño',img:'diego.jpg',col:0x222222}
+ aleja:{name:'Aleja Japandi - 22A',age:22,img:'aleja.jpg',col:0xe8ddd0,accent:0xc4a882},
+ andres:{name:'Andres Industrial - 18A',age:18,img:'andres.jpg',col:0x9a9a9a,accent:0xffc83d},
+ diana:{name:'Diana Rococo - 18A',age:18,img:'diana.jpg',col:0xfff6e0,accent:0xd4af37},
+ alfred:{name:'Alfred Mediterraneo - 20A',age:20,img:'alfred.jpg',col:0xf5e6c8,accent:0xc05c3c},
+ diego:{name:'Diego Contemporaneo - 19A',age:19,img:'diego.jpg',col:0x222222,accent:0x5ee1ff}
 };
-let current='aleja',scene,camera,renderer,controls,lots=[],builds=[],ray,mouse,selected=null;
+let current='aleja',scene,camera,renderer,controls,lots=[],builds=[],ray,mouse,selected=null,inside=null,hovered=null,pop=12847;
 const cDiv=document.getElementById('canvas');
 function init(){
- scene=new THREE.Scene();scene.background=new THREE.Color(0x8aa0c8);scene.fog=new THREE.Fog(0x8aa0c8,40,90);
- camera=new THREE.PerspectiveCamera(40,cDiv.clientWidth/cDiv.clientHeight,0.1,200);camera.position.set(18,16,18);
- renderer=new THREE.WebGLRenderer({antialias:true,alpha:false});renderer.setSize(cDiv.clientWidth,cDiv.clientHeight);renderer.setPixelRatio(devicePixelRatio);
- renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.1;renderer.outputColorSpace=THREE.SRGBColorSpace;
+ scene=new THREE.Scene();scene.background=new THREE.Color(0x9fb0c8);scene.fog=new THREE.Fog(0x9fb0c8,35,85);
+ camera=new THREE.PerspectiveCamera(38,cDiv.clientWidth/cDiv.clientHeight,0.1,200);camera.position.set(18,18,18);
+ renderer=new THREE.WebGLRenderer({antialias:true});renderer.setSize(cDiv.clientWidth,cDiv.clientHeight);renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+ renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.15;renderer.outputColorSpace=THREE.SRGBColorSpace;
  cDiv.appendChild(renderer.domElement);
- controls=new OrbitControls(camera,renderer.domElement);controls.enableDamping=true;controls.target.set(0,0,0);
- scene.add(new THREE.HemisphereLight(0xddeeff,0x202030,1.2));
- const sun=new THREE.DirectionalLight(0xffffff,2);sun.position.set(15,30,10);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);sun.shadow.camera.left=-30;sun.shadow.camera.right=30;sun.shadow.camera.top=30;sun.shadow.camera.bottom=-30;scene.add(sun);
- const ground=new THREE.Mesh(new THREE.PlaneGeometry(200,200),new THREE.MeshStandardMaterial({color:0x9aa8b8,roughness:0.9}));ground.rotation.x=-Math.PI/2;ground.receiveShadow=true;scene.add(ground);
- // LOTES CLAROS VISIBLES COMO EN CITIES SKYLINES
- const lotMat=new THREE.MeshStandardMaterial({color:0xd0d8e0,roughness:0.7});
- for(let x=-4;x<=4;x++){for(let z=-4;z<=4;z++){
-   const lot=new THREE.Mesh(new THREE.BoxGeometry(3.6,0.2,3.6),lotMat.clone());lot.position.set(x*4.5,0.1,z*4.5);lot.receiveShadow=true;lot.userData={built:false,grid:{x,z}};lots.push(lot);scene.add(lot);
-   const line=new THREE.LineSegments(new THREE.EdgesGeometry(lot.geometry),new THREE.LineBasicMaterial({color:0x5a6a80}));line.position.copy(lot.position);scene.add(line);
- }}
+ controls=new OrbitControls(camera,renderer.domElement);controls.enableDamping=true;controls.dampingFactor=0.08;controls.target.set(0,0,0);
+ scene.add(new THREE.HemisphereLight(0xddeeff,0x303040,1.1));
+ const sun=new THREE.DirectionalLight(0xffffff,1.8);sun.position.set(20,35,15);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);sun.shadow.camera.left=-40;sun.shadow.camera.right=40;sun.shadow.camera.top=40;sun.shadow.camera.bottom=-40;scene.add(sun);
+ const ground=new THREE.Mesh(new THREE.PlaneGeometry(300,300),new THREE.MeshStandardMaterial({color:0xaab8c8,roughness:0.9}));ground.rotation.x=-Math.PI/2;ground.receiveShadow=true;scene.add(ground);
+ for(let x=-5;x<=5;x++){for(let z=-5;z<=5;z++){const mat=new THREE.MeshStandardMaterial({color:0xe2e8f0,roughness:0.7});const lot=new THREE.Mesh(new THREE.BoxGeometry(3.5,0.18,3.5),mat);lot.position.set(x*4.4,0.09,z*4.4);lot.receiveShadow=true;lot.userData={built:false,grid:{x,z},origColor:0xe2e8f0};lots.push(lot);scene.add(lot);const edge=new THREE.LineSegments(new THREE.EdgesGeometry(lot.geometry),new THREE.LineBasicMaterial({color:0x6b7b8f,transparent:true,opacity:0.6}));edge.position.copy(lot.position);edge.position.y+=0.01;scene.add(edge);}}
  createProfiles();ray=new THREE.Raycaster();mouse=new THREE.Vector2();
- renderer.domElement.addEventListener('pointerdown',onDown);
- document.querySelectorAll('.btn').forEach(b=>b.addEventListener('click',()=>{if(selected) build(selected,b.dataset.t)}));
+ renderer.domElement.addEventListener('pointermove',onMove);renderer.domElement.addEventListener('pointerdown',onDown);renderer.domElement.addEventListener('dblclick',onDbl);renderer.domElement.addEventListener('contextmenu',e=>{e.preventDefault();onRight(e);});
+ document.querySelectorAll('.btn[data-t]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.btn[data-t]').forEach(x=>x.classList.remove('active'));b.classList.add('active');if(selected) build(selected,b.dataset.t);}));
+ document.getElementById('exitInt').onclick=()=>{inside=null;document.getElementById('interiorPanel').style.display='none';camera.position.set(18,18,18);controls.target.set(0,0,0);};document.getElementById('wallC').oninput=e=>{if(inside) inside.mat.color.set(e.target.value);};
  window.addEventListener('resize',()=>{camera.aspect=cDiv.clientWidth/cDiv.clientHeight;camera.updateProjectionMatrix();renderer.setSize(cDiv.clientWidth,cDiv.clientHeight);});
- animate();log();
+ animate();setInterval(()=>{pop+=Math.floor(Math.random()*5);document.getElementById('pop').textContent=pop.toLocaleString();document.getElementById('foot').textContent=(3200+Math.floor(Math.random()*200))+' p/h';},1200);drawChart();
+ // Logs solo en consola, no público
+ console.log('%cSAMA ARCHITECT V8 PRO','color:#5ee1ff;font-size:16px;font-weight:bold');console.log('Debug interno: [DECIMALES] 2.85m Aleja 22 trigueña | [CUADRATICA] Andres 18 trigueño gorra | [LINEAL] Diana 18 | [VOL] Alfred 20 | [ARCO] Diego 19');
 }
-function createProfiles(){
- const c=document.getElementById('profiles');c.innerHTML='';Object.keys(ARCHS).forEach(k=>{
-  const a=ARCHS[k];const d=document.createElement('div');d.className='prof'+(k===current?' active':'');
-  d.innerHTML=`<img src="${a.img}" onerror="this.src='https://ui-avatars.com/api/?name=${k}'"><div><b style="font-size:10px">${a.name} - ${a.age}A</b><div style="font-size:7px;opacity:.6">${a.style}</div></div>`;
-  d.onclick=()=>{current=k;document.querySelectorAll('.prof').forEach(p=>p.classList.remove('active'));d.classList.add('active');log();};c.appendChild(d);
- });
+function createProfiles(){const c=document.getElementById('profiles');c.innerHTML='';Object.keys(ARCHS).forEach(k=>{const a=ARCHS[k];const d=document.createElement('div');d.className='prof'+(k===current?' active':'');d.innerHTML=`<img src="${a.img}" onerror="this.src='https://ui-avatars.com/api/?name=${k}'"><div><b style="font-size:10px">${a.name}</b><div style="font-size:7px;opacity:.6">ACTIVE • ${a.age}A • ${a.name.split(' ')[1]}</div></div>`;d.onclick=()=>{current=k;document.querySelectorAll('.prof').forEach(p=>p.classList.remove('active'));d.classList.add('active');};c.appendChild(d);});}
+function onMove(e){if(inside) return;const r=renderer.domElement.getBoundingClientRect();mouse.x=((e.clientX-r.left)/r.width)*2-1;mouse.y=-((e.clientY-r.top)/r.height)*2+1;ray.setFromCamera(mouse,camera);const hits=ray.intersectObjects(lots);if(hovered&&hovered!==selected)hovered.material.color.set(hovered.userData.origColor);if(hits.length&&!hits[0].object.userData.built){hovered=hits[0].object;if(hovered!==selected)hovered.material.color.set(0xb0d8ff);}else hovered=null;}
+function onDown(e){if(inside) return;ray.setFromCamera(mouse,camera);const hits=ray.intersectObjects(lots);if(hits.length&&!hits[0].object.userData.built){if(selected)selected.material.color.set(selected.userData.origColor);selected=hits[0].object;selected.material.color.set(0x5ee1ff);document.getElementById('lotInfo').innerHTML=`<b>LOTE ${selected.userData.grid.x},${selected.userData.grid.z}</b><br>Zoning: MIXED-USE<br>Arquitecto: ${ARCHS[current].name}<br><i style="opacity:.6">Elige un edificio a la izquierda para construir</i>`;}}
+function onRight(e){ray.setFromCamera(mouse,camera);const hits=ray.intersectObjects(builds.map(b=>b.mesh));if(hits.length){const idx=builds.findIndex(b=>b.mesh===hits[0].object);if(idx>=0){scene.remove(builds[idx].group);builds.splice(idx,1);document.getElementById('lotInfo').textContent='Lote demolido - disponible';}}
 }
-function onDown(e){
- const r=renderer.domElement.getBoundingClientRect();mouse.x=((e.clientX-r.left)/r.width)*2-1;mouse.y=-((e.clientY-r.top)/r.height)*2+1;
- ray.setFromCamera(mouse,camera);const h=ray.intersectObjects(lots);if(h.length){lots.forEach(l=>l.material.color.set(0xd0d8e0));h[0].object.material.color.set(0x5ee1ff);selected=h[0].object;document.getElementById('infoLot').textContent=`Lote ${h[0].object.userData.grid.x},${h[0].object.userData.grid.z} seleccionado - Arquitecto ${ARCHS[current].name} ${ARCHS[current].age}A`;}
-}
+function onDbl(e){ray.setFromCamera(mouse,camera);const hits=ray.intersectObjects(builds.map(b=>b.mesh));if(hits.length){const b=builds.find(x=>x.mesh===hits[0].object);inside=b;document.getElementById('interiorPanel').style.display='block';document.getElementById('intTitle').textContent=b.type.toUpperCase()+' - '+ARCHS[b.arch].name;camera.position.set(b.group.position.x+2,2,b.group.position.z+2);controls.target.copy(b.group.position);}}
 function build(lot,type){
  if(lot.userData.built) return;lot.userData.built=true;lot.visible=false;
- const arch=ARCHS[current];const H=type==='casa'?2.85:type==='edificio'?14:7;
+ const arch=ARCHS[current];const H=type==='casa'?2.85:type==='edificio'?14:type==='hotel'?9:type==='tienda'?4.5:5.5;
  const group=new THREE.Group();group.position.set(lot.position.x,0,lot.position.z);scene.add(group);
- // andamio realista
- const scaff=new THREE.Group();for(let i=0;i<4;i++){const p=new THREE.Mesh(new THREE.CylinderGeometry(0.04,0.04,H,6),new THREE.MeshStandardMaterial({color:0xffcc4d}));p.position.set(i%2?1.8:-1.8,H/2,i>1?1.8:-1.8);p.castShadow=true;scaff.add(p);}group.add(scaff);
- // edificio base
- const geo=type==='casa'?new THREE.BoxGeometry(3,2.85,3):type==='edificio'?new THREE.BoxGeometry(3.2,H,3.2):new THREE.BoxGeometry(4,H*0.7,3.5);
- const mat=new THREE.MeshStandardMaterial({color:arch.col,roughness:0.6,metalness:current==='diego'?0.5:0.1});
- const mesh=new THREE.Mesh(geo,mat);mesh.position.y=H/2;mesh.castShadow=true;mesh.receiveShadow=true;mesh.scale.y=0.01;group.add(mesh);
- // ventanas iluminadas
- for(let y=1;y<H;y+=1.2){for(let s=-1;s<=1;s+=2){const win=new THREE.Mesh(new THREE.PlaneGeometry(0.5,0.7),new THREE.MeshStandardMaterial({color:0xfff2a0,emissive:0xffcc66,emissiveIntensity:0.8}));win.position.set(1.61,y,s*0.6);win.rotation.y=Math.PI/2;group.add(win);}}
- // grua animada que construye
- const craneBase=new THREE.Mesh(new THREE.CylinderGeometry(0.12,0.18,8,8),new THREE.MeshStandardMaterial({color:0xffcc4d}));craneBase.position.set(3,4,0);group.add(craneBase);
- builds.push({mesh,group,arch:current});
- const start=Date.now();(function grow(){
-  const t=Math.min((Date.now()-start)/1800,1),e=1-Math.pow(1-t,3);
-  mesh.scale.y=e;craneBase.rotation.y+=0.02;
-  if(t<1) requestAnimationFrame(grow);else{group.remove(scaff);group.remove(craneBase);}
- })();
- const A=34*34;document.getElementById('infoLot').textContent=`CONSTRUIDO: ${type} ${H}m - ${arch.name} ${arch.age}A\nArea ${A}m2 - Volumen ${(A*H).toFixed(0)}m3 - 2.85m validado`;
+ const scaff=new THREE.Group();for(let i=0;i<4;i++){const p=new THREE.Mesh(new THREE.CylinderGeometry(0.03,0.03,H,6),new THREE.MeshStandardMaterial({color:0xffcc4d}));p.position.set(i%2?1.7:-1.7,H/2,i>1?1.7:-1.7);scaff.add(p);}const plat=new THREE.Mesh(new THREE.BoxGeometry(3.8,0.05,3.8),new THREE.MeshStandardMaterial({color:0xffcc4d,transparent:true,opacity:0.3}));plat.position.y=H;if(H>6)scaff.add(plat);group.add(scaff);
+ const geo=type==='casa'?new THREE.BoxGeometry(2.9,2.85,2.9):type==='edificio'?new THREE.BoxGeometry(3.1,H,3.1):type==='hotel'?new THREE.BoxGeometry(4.2,9,3.2):type==='tienda'?new THREE.BoxGeometry(3.6,4.5,2.8):new THREE.BoxGeometry(3.8,5.5,3);
+ const mat=new THREE.MeshStandardMaterial({color:arch.col,roughness:current==='aleja'?0.8:0.5,metalness:current==='diego'?0.6:0.05});const mesh=new THREE.Mesh(geo,mat);mesh.position.y=0;mesh.scale.y=0.001;mesh.castShadow=true;mesh.receiveShadow=true;group.add(mesh);
+ const floors=Math.floor(H/2.85);for(let f=0;f<floors;f++){setTimeout(()=>{for(let k=0;k<2;k++){const win=new THREE.Mesh(new THREE.PlaneGeometry(0.45,0.6),new THREE.MeshStandardMaterial({color:0xfff5a0,emissive:0xffd56a,emissiveIntensity:1.2}));win.position.set(1.56,(f*2.85)+1.2,k?0.6:-0.6);win.rotation.y=Math.PI/2;group.add(win);}},f*180);}
+ // polvo particulas
+ const dust=new THREE.Points(new THREE.BufferGeometry().setAttribute('position',new THREE.Float32BufferAttribute(new Array(60).fill(0).map(()=> (Math.random()-0.5)*4),3)),new THREE.PointsMaterial({color:0xffffff,size:0.08,transparent:true,opacity:0.6}));dust.position.y=H/2;group.add(dust);
+ const crane=new THREE.Group();const base=new THREE.Mesh(new THREE.CylinderGeometry(0.1,0.14,6,8),new THREE.MeshStandardMaterial({color:0xffcc4d}));base.position.y=3;crane.add(base);const arm=new THREE.Mesh(new THREE.BoxGeometry(7,0.08,0.08),new THREE.MeshStandardMaterial({color:0xffcc4d}));arm.position.set(1.5,6,0);crane.add(arm);crane.position.set(3.5,0,0);group.add(crane);
+ builds.push({mesh,group,arch:current,type,mat});const start=Date.now();(function anim(){const t=Math.min((Date.now()-start)/(H*120+800),1),e=1-Math.pow(1-t,3);mesh.scale.y=e;mesh.position.y=(H*e)/2;crane.rotation.y+=0.03;dust.rotation.y+=0.02;dust.material.opacity=1-t;if(t<1)requestAnimationFrame(anim);else{group.remove(scaff);group.remove(crane);group.remove(dust);}})();
+ document.getElementById('lotInfo').innerHTML=`<b style="color:#5ee1ff">CONSTRUIDO: ${type.toUpperCase()}</b><br>Arquitecto: ${arch.name}<br>Altura: ${H}m - ${floors} plantas<br>Área: ${(geo.parameters.width*geo.parameters.depth).toFixed(1)}m²<br>Volumen: ${(geo.parameters.width*geo.parameters.depth*H).toFixed(0)}m³<br><br><span style="color:#2aff7a">✓ 2.85m exacto validado</span>`;
+ // update metrics
+ pop+=45;
 }
-function log(){const a=ARCHS[current];document.getElementById('log').textContent=`Activo: ${a.name} - ${a.age} AÑOS\n${a.style}\n\n[DECIMALES] 2.85m Aleja 22 trigueña pestañas largas castaño oscuro\n[CUADRATICA] Andres 18 trigueño gorra ojos claros\n[LINEAL] Diana 18 juvenil pelo largo lentes\n[VOL] Alfred 20 corto lado coreano\n[ARCO] Diego 19 corte juvenil\n\nAhora la ciudad es clara, isométrica 35°, con sombras suaves y PBR.`;}
+function drawChart(){const c=document.getElementById('chart');if(!c) return;const ctx=c.getContext('2d');let off=0;setInterval(()=>{ctx.fillStyle='#0a1220';ctx.fillRect(0,0,280,70);ctx.strokeStyle='#5ee1ff';ctx.lineWidth=1.5;ctx.beginPath();for(let i=0;i<280;i++){const y=35+Math.sin((i+off)/25)*12+Math.sin((i+off)/12)*6;if(i===0)ctx.moveTo(i,y);else ctx.lineTo(i,y);}ctx.stroke();off+=2;},50);}
 function animate(){requestAnimationFrame(animate);controls.update();renderer.render(scene,camera);}
 init();
 </script>
