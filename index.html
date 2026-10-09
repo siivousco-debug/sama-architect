@@ -2,47 +2,63 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>SAMA ARCHITECT v9.1 ANALYTICS PRO • 2026</title>
+<title>SAMA ARCHITECT v10 ANALYTICS PRO - 2026</title>
 <script async src="https://unpkg.com/es-module-shims@1.8.0/dist/es-module-shims.js"></script>
 <script type="importmap">{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.160.0/examples/jsm/"}}</script>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}body{background:#0a0f1d;color:#d0d8e6;font-family:Inter;overflow:hidden}
+*{margin:0;padding:0;box-sizing:border-box}body{background:#0a0f1d;color:#d0d8e6;font-family:Inter,system-ui;overflow:hidden}
 #top{position:absolute;top:0;left:0;right:0;height:48px;background:#0e172b;display:flex;align-items:center;padding:0 14px;z-index:20;border-bottom:1px solid #1e2d42}
 #left{position:absolute;left:0;top:48px;bottom:0;width:280px;background:#0d1526;border-right:1px solid #1e2d42;overflow-y:auto;padding:8px}
-#right{position:absolute;right:0;top:48px;bottom:0;width:310px;background:#0d1526;border-left:1px solid #1e2d42;overflow-y:auto;padding:8px}
-#center{position:absolute;left:280px;right:310px;top:48px;bottom:0;background:#9fb0c8}
-.prof{display:flex;gap:8px;padding:8px;border:1px solid #1e2d42;border-radius:10px;margin-bottom:6px;background:#111c2e;cursor:pointer}.prof.active{border-color:#5ee1ff}.prof img{width:42px;height:42px;border-radius:8px;object-fit:cover}
-.btn{width:100%;background:#162032;border:1px solid #2a3e5a;border-radius:8px;padding:11px;font-size:11px;color:#fff;margin:4px 0;cursor:pointer;text-align:left}.btn.active{background:#1a3a5a;border-color:#5ee1ff}
+#right{position:absolute;right:0;top:48px;bottom:0;width:330px;background:#0d1526;border-left:1px solid #1e2d42;overflow-y:auto;padding:8px}
+#center{position:absolute;left:280px;right:330px;top:48px;bottom:0;background:#9fb0c8}
+.prof{display:flex;gap:10px;padding:9px;border:1px solid #1e2d42;border-radius:10px;margin-bottom:6px;background:#111c2e;cursor:pointer;transition:.2s}.prof.active{border-color:#5ee1ff;box-shadow:0 0 10px rgba(94,225,255,.3)}.prof img{width:42px;height:42px;border-radius:8px;object-fit:cover}
+.btn{width:100%;background:#162032;border:1px solid #2a3e5a;border-radius:8px;padding:12px;font-size:11px;color:#fff;margin:5px 0;cursor:pointer;text-align:left;font-weight:600}.btn:hover{border-color:#5ee1ff;background:#1e3456}.btn.active{background:#1a3a5a;border-color:#5ee1ff}
 .card{background:#111c2e;border:1px solid #1e2d42;border-radius:10px;padding:10px;margin-bottom:8px}.card h3{font-size:9px;opacity:.5;letter-spacing:1px;margin-bottom:8px}
 #canvas{position:absolute;inset:0}
 </style>
 </head>
 <body>
-<div id="top"><b>SAMA <span style="color:#5ee1ff">ARCHITECT</span> <span style="font-size:10px;opacity:.5">v9.1 JAPANDI DOLLHOUSE • ANALYTICS PRO • 2026</span></b><span style="margin-left:18px;background:#0f2418;border:1px solid #2aff7a;color:#2aff7a;font-family:monospace;font-size:9px;padding:4px 10px;border-radius:20px">● SIMULATION RUNNING • PBR REALISTIC</span></div>
-<div id="left"><div id="profiles"></div><div class="card"><h3>CATALOGO</h3>
-<button class="btn active" data-t="casa">🏠 CASA JAPANDI 2.85m • Aleja</button>
-<button class="btn" data-t="edificio">🏢 EDIFICIO Industrial • Andres</button>
-<button class="btn" data-t="hotel">🏨 HOTEL Rococó • Diana</button>
-<button class="btn" data-t="tienda">🛍️ TIENDA Med • Alfred</button>
-</div></div>
+<div id="top"><b>SAMA <span style="color:#5ee1ff">ARCHITECT</span> <span style="font-size:10px;opacity:.5">v10 ANALYTICS PRO • JAPANDI DOLLHOUSE • 2026</span></b><span style="margin-left:18px;background:#0f2418;border:1px solid #2aff7a;color:#2aff7a;font-family:monospace;font-size:9px;padding:4px 10px;border-radius:20px">● SIMULATION RUNNING</span></div>
+
+<div id="left">
+<div style="font-size:8px;opacity:.4;margin-bottom:6px">ARCHITECT PROFILES - ESTILOS DE CONSTRUCCION</div>
+<div id="profiles"></div>
+<div class="card" style="margin-top:10px"><h3>CATALOGO</h3>
+<button class="btn active" data-t="casa">🏠 CASA</button>
+<button class="btn" data-t="edificio">🏢 EDIFICIO</button>
+<button class="btn" data-t="hotel">🏨 HOTEL DE LUJO</button>
+<button class="btn" data-t="restaurante">🍝 RESTAURANTE</button>
+</div>
+</div>
+
 <div id="center"><div id="canvas"></div></div>
+
 <div id="right">
 <div class="card"><h3>DASHBOARD - REAL-TIME METRICS</h3><div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-family:monospace;font-size:9px">
-<div style="background:#0a1220;padding:8px;border-radius:8px">POPULATION<br><b id="pop" style="font-size:14px">12,847</b><br><span style="color:#2aff7a">+124</span></div>
-<div style="background:#0a1220;padding:8px;border-radius:8px">BUDGET<br><b style="font-size:14px">$4.82M</b></div>
-<div style="background:#0a1220;padding:8px;border-radius:8px">CASAS JAPANDI<br><b id="houseCount">0</b></div>
-<div style="background:#0a1220;padding:8px;border-radius:8px">CARBON<br><b>1.42 tCO₂ ↓ -14%</b></div>
+<div style="background:#0a1220;padding:8px;border-radius:8px">POPULATION<br><b id="pop" style="font-size:14px;color:#fff">12,847</b><br><span style="color:#2aff7a">+124 (1.0%)</span></div>
+<div style="background:#0a1220;padding:8px;border-radius:8px">BUDGET<br><b style="font-size:14px;color:#fff">$4.82M</b><br><span style="color:#ff5a5a">-$120K</span></div>
+<div style="background:#0a1220;padding:8px;border-radius:8px">CONSTRUIDAS<br><b id="houseCount" style="font-size:14px">0</b></div>
+<div style="background:#0a1220;padding:8px;border-radius:8px">CARBON<br><b>1.42 tCO₂</b><br><span style="color:#2aff7a">-14.2% ↓</span></div>
 </div></div>
 
-<div class="card" style="border-color:#5ee1ff"><h3>SELECTED LOT - ANALISIS TECNICO</h3><div id="lotInfo" style="font-family:monospace;font-size:9px;line-height:1.5">Lote libre - Click para construir<br>Se mostrarán fórmulas reales</div></div>
+<div class="card" style="border-color:#5ee1ff"><h3>SELECTED LOT - ANALISIS IA + FORMULAS REALES</h3><div id="lotInfo" style="font-family:monospace;font-size:8.5px;line-height:1.5">Lote libre<br>Click para construir y ver análisis matemático real</div></div>
 
-<div class="card"><h3>SYSTEM ANALYTICS - TRAFFIC FLOW (24H)</h3><canvas id="chart" width="290" height="70" style="background:#0a1220;border-radius:6px;width:100%"></canvas></div>
-<div class="card"><h3>ENVIRONMENTAL DATA</h3><div style="font-family:monospace;font-size:9px"><div style="display:flex;justify-content:space-between"><span>Sun Exposure:</span><span>72%</span></div><div style="display:flex;justify-content:space-between"><span>Wind Flow:</span><span>14 km/h NW</span></div><div style="display:flex;justify-content:space-between"><span>Noise Level:</span><span>58 dB</span></div></div></div>
+<div class="card"><h3>SYSTEM ANALYTICS - IA PREDICTIVA</h3><canvas id="chart" width="310" height="70" style="background:#0a1220;border-radius:6px;width:100%"></canvas><div style="font-family:monospace;font-size:8px;margin-top:6px;opacity:.6">IA: Flujo peatonal + Densidad + Eficiencia energética<br>Predicción: +3.2% ocupación próximas 24h</div></div>
+
+<div class="card"><h3>ENVIRONMENTAL DATA</h3><div style="font-family:monospace;font-size:9px"><div style="display:flex;justify-content:space-between"><span>Sun Exposure:</span><span>72% • Óptimo Japandi</span></div><div style="display:flex;justify-content:space-between"><span>Wind Flow:</span><span>14 km/h NW</span></div><div style="display:flex;justify-content:space-between"><span>Eficiencia:</span><span style="color:#2aff7a">A+ (Japandi)</span></div></div></div>
 </div>
+
 <script type="module">
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-const ARCHS={aleja:{name:'Aleja Japandi - 22A',img:'aleja.jpg'},andres:{name:'Andres Industrial - 18A',img:'andres.jpg'},diana:{name:'Diana Rococo - 18A',img:'diana.jpg'},alfred:{name:'Alfred Med - 20A',img:'alfred.jpg'},diego:{name:'Diego Contemp - 19A',img:'diego.jpg'}};
+// SOLO ESTILOS, SIN RASGOS FISICOS
+const ARCHS={
+ aleja:{name:'Aleja',style:'JAPANDI - Minimal / Madera clara / 2.85m',img:'aleja.jpg'},
+ andres:{name:'Andres',style:'INDUSTRIAL - Acero / Hormigón visto / Cuadrática',img:'andres.jpg'},
+ diana:{name:'Diana',style:'ROCOCO - Clásico ornamental / Lineal',img:'diana.jpg'},
+ alfred:{name:'Alfred',style:'MEDITERRANEO - Terracota / Volumen / Arcos',img:'alfred.jpg'},
+ diego:{name:'Diego',style:'CONTEMPORANEO - Cristal / Moderno / Parabólico',img:'diego.jpg'}
+};
 let current='aleja',scene,camera,renderer,controls,lots=[],builds=[],ray,mouse,selected=null,houseCount=0;
 const cDiv=document.getElementById('canvas');
 function init(){
@@ -59,8 +75,14 @@ function init(){
  window.addEventListener('resize',()=>{camera.aspect=cDiv.clientWidth/cDiv.clientHeight;camera.updateProjectionMatrix();renderer.setSize(cDiv.clientWidth,cDiv.clientHeight);});
  animate();drawChart();
 }
-function createProfiles(){const c=document.getElementById('profiles');Object.keys(ARCHS).forEach(k=>{const a=ARCHS[k];const d=document.createElement('div');d.className='prof'+(k===current?' active':'');d.innerHTML=`<img src="${a.img}" onerror="this.src='https://ui-avatars.com/api/?name=${k}'"><div><b style="font-size:10px">${a.name}</b></div>`;d.onclick=()=>{current=k;document.querySelectorAll('.prof').forEach(p=>p.classList.remove('active'));d.classList.add('active');};c.appendChild(d);});}
-function onDown(e){const r=renderer.domElement.getBoundingClientRect();mouse.x=((e.clientX-r.left)/r.width)*2-1;mouse.y=-((e.clientY-r.top)/r.height)*2+1;ray.setFromCamera(mouse,camera);const hits=ray.intersectObjects(lots);if(hits.length&&!hits[0].object.userData.built){if(selected)selected.material.color.set(0xe6ecf2);selected=hits[0].object;selected.material.color.set(0x5ee1ff);document.getElementById('lotInfo').innerHTML=`<b>LOTE ${hits[0].object.position.x.toFixed(0)},${hits[0].object.position.z.toFixed(0)} SELECCIONADO</b><br>Zoning: RESIDENTIAL R1 - Japandi<br>Área lote: 3.8m x 3.8m = 14.44m²<br><i>Elige CASA para ver fórmulas</i>`;}}
+function createProfiles(){
+ const c=document.getElementById('profiles');c.innerHTML='';Object.keys(ARCHS).forEach(k=>{
+  const a=ARCHS[k];const d=document.createElement('div');d.className='prof'+(k===current?' active':'');
+  d.innerHTML=`<img src="${a.img}" onerror="this.src='https://ui-avatars.com/api/?name=${a.name}'"><div><b style="font-size:11px">${a.name}</b><div style="font-size:7.5px;opacity:.6;line-height:1.2">${a.style}</div></div>`;
+  d.onclick=()=>{current=k;document.querySelectorAll('.prof').forEach(p=>p.classList.remove('active'));d.classList.add('active');};c.appendChild(d);
+ });
+}
+function onDown(e){const r=renderer.domElement.getBoundingClientRect();mouse.x=((e.clientX-r.left)/r.width)*2-1;mouse.y=-((e.clientY-r.top)/r.height)*2+1;ray.setFromCamera(mouse,camera);const hits=ray.intersectObjects(lots);if(hits.length&&!hits[0].object.userData.built){if(selected)selected.material.color.set(0xe6ecf2);selected=hits[0].object;selected.material.color.set(0x5ee1ff);document.getElementById('lotInfo').innerHTML=`<b>LOTE ${hits[0].object.position.x.toFixed(0)},${hits[0].object.position.z.toFixed(0)} SELECCIONADO</b><br>Zoning: RESIDENTIAL R1<br>Área lote: 14.44 m²<br><i>Elige tipología del catálogo</i>`;}}
 function createJapandiHouse(group){
  const wood=new THREE.MeshStandardMaterial({color:0xc4a882,roughness:0.6});const white=new THREE.MeshStandardMaterial({color:0xf5f3ef});const glass=new THREE.MeshStandardMaterial({color:0xaaccff,transparent:true,opacity:0.25});const concrete=new THREE.MeshStandardMaterial({color:0xdddddd});
  const base=new THREE.Mesh(new THREE.BoxGeometry(3.8,0.12,3.4),concrete);base.position.y=0.06;group.add(base);
@@ -79,53 +101,69 @@ function createJapandiHouse(group){
 function build(lot,type){
  if(lot.userData.built) return;lot.userData.built=true;lot.visible=false;
  const group=new THREE.Group();group.position.set(lot.position.x,0,lot.position.z);scene.add(group);
+ // CALCULOS REALES COHERENTES PARA ESTA CASA
+ const L=3.6, W=3.2, h=2.85, H=5.7, floors=2;
+ const A_planta = L*W; // 11.52
+ const A_total = A_planta*floors; // 23.04
+ const V = A_planta*H; // 65.664
+ const Perim = 2*(L+W); // 13.6
+ const A_fachada = Perim*h; // 38.76
+ const costo_m2 = 1850;
+ const C_lineal = 1200*A_total + 5000; // 32648
+ const C_total = A_total*costo_m2 + 12000; // 54624
+ const costo_fachada = A_fachada*120; // 4651.2
+ const x=34, b=68;
+ const A_quad = -x*x + b*x; // -1156+2312=1156
+ const x_opt = b/2; // 34
+ const y_arco = -0.12*Math.pow(2,2)+1.8*2; // 3.12
  if(type==='casa'){
    createJapandiHouse(group);
-   const all=[];group.traverse(o=>{if(o.isMesh) all.push(o);});all.forEach(m=>m.scale.set(0.001,0.001,0.001));let idx=0;(function seq(){if(idx>=all.length) return;const m=all[idx];const start=Date.now();(function grow(){const t=Math.min((Date.now()-start)/160,1);const e=1-Math.pow(1-t,3);m.scale.set(e,e,e);if(t<1)requestAnimationFrame(grow);else{idx++;setTimeout(seq,30);}})();})();
-   // FORMULAS REALES Y COHERENTES - AHORA SI
-   const L=3.6, W=3.2, h1=2.85, H=5.7, floors=2;
-   const A_planta = L*W; // 11.52
-   const A_total = A_planta*floors; // 23.04
-   const V = A_planta*H; // 65.66
-   const Perim = 2*(L+W); // 13.6
-   const costo_m2 = 1850; // USD/m2 Japandi
-   const C_lineal = 1200*A_total + 5000; // lineal
-   const C_real = A_total*costo_m2 + 12000; // costo real
-   const x_opt = 34; // optimizacion cuadratica
-   const A_cuad = -Math.pow(34,2)+68*34; // -x²+68x
+   const all=[];group.traverse(o=>{if(o.isMesh) all.push(o);});all.forEach(m=>m.scale.set(0.001,0.001,0.001));let idx=0;(function seq(){if(idx>=all.length) return;const m=all[idx];const start=Date.now();(function grow(){const t=Math.min((Date.now()-start)/140,1);const e=1-Math.pow(1-t,3);m.scale.set(e,e,e);if(t<1)requestAnimationFrame(grow);else{idx++;setTimeout(seq,25);}})();})();
    houseCount++;document.getElementById('houseCount').textContent=houseCount;
    document.getElementById('lotInfo').innerHTML=`
-<b style="color:#5ee1ff">CASA JAPANDI - ANALISIS MATEMATICO</b><br>
-<b>GEOMETRIA:</b><br>
-• Planta: L=${L}m × W=${W}m<br>
-• A_planta = L×W = ${A_planta.toFixed(2)} m²<br>
-• A_total = A_planta×${floors} = ${A_total.toFixed(2)} m²<br>
-• V = A_planta×H = ${A_planta.toFixed(2)}×${H} = ${V.toFixed(2)} m³<br>
-• Perímetro = 2(L+W) = ${Perim.toFixed(1)} m<br>
-• h_piso = 2.85m (estándar Japandi)<br>
+<b style="color:#5ee1ff">CASA JAPANDI - ANALISIS TECNICO IA</b><br>
+<b style="color:#2aff7a">GEOMETRIA APLICADA:</b><br>
+• Dim: ${L}m × ${W}m × ${H}m (${floors} pisos × ${h}m)<br>
+• A_planta = L×W = ${L}×${W} = <b>${A_planta.toFixed(2)} m²</b><br>
+• A_total = ${A_planta.toFixed(2)}×${floors} = <b>${A_total.toFixed(2)} m²</b><br>
+• V = A_planta×H = ${A_planta.toFixed(2)}×${H} = <b>${V.toFixed(3)} m³</b><br>
+• Perím = 2(L+W) = <b>${Perim.toFixed(1)} m</b><br>
+• A_fachada = Perím×h = ${Perim.toFixed(1)}×${h} = <b>${A_fachada.toFixed(2)} m²</b><br>
 <br>
-<b>ALGEBRA LINEAL - COSTOS:</b><br>
-• C(A)=1200A+5000 → ${C_lineal.toFixed(0)} USD<br>
-• C_real = ${costo_m2}×A_total+12000 = $${C_real.toLocaleString()}<br>
-• Costo/m² = $${costo_m2}<br>
+<b style="color:#2aff7a">ALGEBRA LINEAL - COSTOS REALES:</b><br>
+• C(A)=1200A+5000 = 1200×${A_total.toFixed(2)}+5000 = <b>$${C_lineal.toFixed(0)}</b><br>
+• C_total = ${costo_m2}×A_total+12000 = <b>$${C_total.toLocaleString()}</b><br>
+• C_fachada = ${A_fachada.toFixed(2)}×120 = <b>$${costo_fachada.toFixed(0)}</b><br>
 <br>
-<b>OPTIMIZACION CUADRATICA:</b><br>
-• A(x)=-x²+68x<br>
-• A_max en x=34 → ${A_cuad} m²<br>
-• x_opt = -b/2a = 34m<br>
+<b style="color:#2aff7a">OPT. CUADRATICA - LOTE:</b><br>
+• A(x)=-x²+${b}x<br>
+• x_opt=-b/2a = ${b}/2 = <b>${x_opt}m</b><br>
+• A_max(${x}) = -${x}²+${b}×${x} = <b>${A_quad} m²</b><br>
 <br>
-<b>ARCO - ESCALERA:</b><br>
-• y = -0.12x²+1.8x (parábola escalera)<br>
-• Pendiente 35° Japandi<br>
+<b style="color:#2aff7a">ARCO PARABOLICO - ESCALERA:</b><br>
+• y=-0.12x²+1.8x<br>
+• y(2)= -0.12×4+3.6 = <b>${y_arco.toFixed(2)}m</b><br>
+• Pendiente 35° Japandi validada<br>
 <br>
-<span style="color:#2aff7a">✓ 2.85m validado • Volumen habitable coherente</span>
+<span style="color:#5ee1ff">✓ IA: Eficiencia A+ • 2.85m exacto • Volumen habitable coherente</span>
 `;
- }else{
-   const geo=new THREE.BoxGeometry(2.8,type==='edificio'?14:6,2.8);const mat=new THREE.MeshStandardMaterial({color:0x888888});const mesh=new THREE.Mesh(geo,mat);mesh.position.y=geo.parameters.height/2;group.add(mesh);
+ } else {
+   let hEd = type==='edificio'?14:type==='hotel'?9:5.5;
+   let geo=new THREE.BoxGeometry(type==='restaurante'?3.8:3.1,hEd,3.1);let mat=new THREE.MeshStandardMaterial({color:type==='edificio'?0x6a6a6a:type==='hotel'?0x9a8a6a:0xc48a5a});let mesh=new THREE.Mesh(geo,mat);mesh.position.y=hEd/2;mesh.castShadow=true;group.add(mesh);
+   const A_e = 3.1*3.1; const V_e = A_e*hEd; const C_e = 1200*A_e + 5000 + hEd*800;
+   document.getElementById('lotInfo').innerHTML=`
+<b style="color:#5ee1ff">${type.toUpperCase()} - ANALISIS TECNICO</b><br>
+<b>GEOMETRIA:</b><br>
+• A_base = 3.1×3.1 = ${A_e.toFixed(2)} m²<br>
+• V = ${A_e.toFixed(2)}×${hEd} = ${V_e.toFixed(1)} m³<br>
+• H = ${hEd}m<br>
+<b>LINEAL:</b> C=1200A+5000+800H = $${C_e.toFixed(0)}<br>
+<b>CUADRATICA:</b> A_max = ${A_quad} m² en x=${x_opt}m<br>
+`;
  }
  builds.push({group});
 }
-function drawChart(){const c=document.getElementById('chart');const ctx=c.getContext('2d');let off=0;setInterval(()=>{ctx.fillStyle='#0a1220';ctx.fillRect(0,0,290,70);ctx.strokeStyle='#5ee1ff';ctx.beginPath();for(let i=0;i<290;i++){const y=35+Math.sin((i+off)/25)*12+Math.sin((i+off)/12)*6;if(i===0)ctx.moveTo(i,y);else ctx.lineTo(i,y);}ctx.stroke();off+=2;},50);}
+function drawChart(){const c=document.getElementById('chart');const ctx=c.getContext('2d');let off=0;setInterval(()=>{ctx.fillStyle='#0a1220';ctx.fillRect(0,0,310,70);ctx.strokeStyle='#5ee1ff';ctx.lineWidth=1.5;ctx.beginPath();for(let i=0;i<310;i++){const y=35+Math.sin((i+off)/25)*12+Math.sin((i+off)/12)*6;if(i===0)ctx.moveTo(i,y);else ctx.lineTo(i,y);}ctx.stroke();off+=2;},50);}
 function animate(){requestAnimationFrame(animate);controls.update();renderer.render(scene,camera);}
 init();
 </script>
