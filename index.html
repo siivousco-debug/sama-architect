@@ -5,7 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SAMA ARQ V3 Final</title>
 <link rel="stylesheet" href="style.css">
-<script type="importmap">{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.160.0/examples/jsm/"}}</script>
+<script async src="https://unpkg.com/es-module-shims@1.8.0/dist/es-module-shims.js"></script>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
 </head>
 <body>
 <div id="ui">
@@ -19,7 +27,7 @@
       <div class="sl"><span>Pisos</span><input type="range" id="pisos" min="1" max="8" value="2"><b id="pisosLabel">2</b></div>
     </div>
     <div id="extraControls"></div>
-    <div class="logBox"><h3>Log Matematico</h3><div id="log"></div></div>
+    <div class="logBox"><h3>Log Matematico</h3><div id="log">Cargando...</div></div>
   </div>
   <div class="footer">Three.js 2026 - Drag orbitar, scroll zoom</div>
 </div>
