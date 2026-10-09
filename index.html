@@ -2,104 +2,120 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>SAMA ARCHITECT v8 INTERACTIVO PRO 2026</title>
+<title>SAMA ARCHITECT v9 JAPANDI DOLLHOUSE - 2026</title>
 <script async src="https://unpkg.com/es-module-shims@1.8.0/dist/es-module-shims.js"></script>
 <script type="importmap">{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.160.0/examples/jsm/"}}</script>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}body{background:#080d1a;color:#d0d8e6;font-family:Inter,system-ui;overflow:hidden}
+*{margin:0;padding:0;box-sizing:border-box}body{background:#0a0f1d;color:#d0d8e6;font-family:Inter;overflow:hidden}
 #top{position:absolute;top:0;left:0;right:0;height:48px;background:#0e172b;display:flex;align-items:center;padding:0 14px;z-index:20;border-bottom:1px solid #1e2d42}
 #left{position:absolute;left:0;top:48px;bottom:0;width:280px;background:#0d1526;border-right:1px solid #1e2d42;overflow-y:auto;padding:8px;z-index:10}
-#right{position:absolute;right:0;top:48px;bottom:0;width:300px;background:#0d1526;border-left:1px solid #1e2d42;overflow-y:auto;padding:8px;z-index:10}
-#center{position:absolute;left:280px;right:300px;top:48px;bottom:0;background:#6e7e94}
-.prof{display:flex;gap:8px;padding:8px;border:1px solid #1e2d42;border-radius:10px;margin-bottom:6px;background:#111c2e;cursor:pointer;transition:.2s}.prof:hover{border-color:#3a5a7a}.prof.active{border-color:#5ee1ff;box-shadow:0 0 12px rgba(94,225,255,.35)}.prof img{width:42px;height:42px;border-radius:8px;object-fit:cover}
-.btn{width:100%;background:#162032;border:1px solid #2a3e5a;border-radius:8px;padding:11px;font-size:11px;cursor:pointer;color:#fff;margin:4px 0;text-align:left}.btn:hover{background:#1e3456;border-color:#5ee1ff;transform:translateX(2px)}.btn.active{border-color:#5ee1ff;background:#1a3a5a}
-.card{background:#111c2e;border:1px solid #1e2d42;border-radius:10px;padding:10px;margin-bottom:8px}.card h3{font-size:9px;opacity:.5;letter-spacing:1px;margin-bottom:8px}
-#canvas{position:absolute;inset:0;cursor:grab}#canvas:active{cursor:grabbing}
-#interiorPanel{position:absolute;right:310px;top:60px;width:210px;background:rgba(13,21,38,.96);border:1px solid #2a3e5a;border-radius:12px;padding:12px;display:none;z-index:15}
+#right{position:absolute;right:0;top:48px;bottom:0;width:300px;background:#0d1526;border-left:1px solid #1e2d42;padding:8px;z-index:10}
+#center{position:absolute;left:280px;right:300px;top:48px;bottom:0;background:#9fb0c8}
+.prof{display:flex;gap:8px;padding:8px;border:1px solid #1e2d42;border-radius:10px;margin-bottom:6px;background:#111c2e;cursor:pointer}.prof.active{border-color:#5ee1ff;box-shadow:0 0 12px rgba(94,225,255,.35)}.prof img{width:42px;height:42px;border-radius:8px;object-fit:cover}
+.btn{width:100%;background:#162032;border:1px solid #2a3e5a;border-radius:8px;padding:11px;font-size:11px;cursor:pointer;color:#fff;margin:4px 0;text-align:left;transition:.2s}.btn:hover{transform:translateX(2px);border-color:#5ee1ff;background:#1e3456}.btn.active{background:#1a3a5a;border-color:#5ee1ff}
+.card{background:#111c2e;border:1px solid #1e2d42;border-radius:10px;padding:10px;margin-bottom:8px}.card h3{font-size:9px;opacity:.5;letter-spacing:1px;margin-bottom:6px}
+#canvas{position:absolute;inset:0}
+#interiorPanel{position:absolute;right:310px;top:60px;width:220px;background:rgba(13,21,38,.96);border:1px solid #2a3e5a;border-radius:12px;padding:12px;display:none;z-index:15}
 </style>
 </head>
 <body>
-<div id="top"><b>SAMA <span style="color:#5ee1ff">ARCHITECT</span> <span style="font-size:10px;opacity:.5;font-weight:400">3D URBANISM SIMULATOR v8 INTERACTIVO • 2026</span></b><span style="margin-left:18px;background:#0f2418;border:1px solid #2aff7a;color:#2aff7a;font-family:monospace;font-size:9px;padding:4px 10px;border-radius:20px">● SIMULATION RUNNING</span><span style="margin-left:6px;background:#1a1a0e;border:1px solid #ffcc4d;color:#ffcc4d;font-family:monospace;font-size:9px;padding:4px 10px;border-radius:20px">◉ WEBGL2 ACTIVE</span><div style="margin-left:auto;font-size:9px;opacity:.5">SA • INTERACTIVE MODE</div></div>
-
-<div id="left"><div style="font-size:8px;opacity:.4;margin-bottom:6px">ARCHITECT PROFILES</div><div id="profiles"></div>
-<div class="card"><h3>BUILDING CATALOG</h3>
-<button class="btn" data-t="casa">🏠 CASA • 2.85m exactos • Japandi</button>
-<button class="btn" data-t="edificio">🏢 EDIFICIO 14fl + Elevador • Industrial</button>
-<button class="btn" data-t="hotel">🏨 HOTEL Lujo • Rococó</button>
-<button class="btn" data-t="tienda">🛍️ TIENDA • Mediterráneo</button>
-<button class="btn" data-t="restaurante">🍝 RESTAURANTE • Contemporáneo</button>
-<div style="font-size:8px;opacity:.4;margin-top:10px">TIP: Hover lote • Click seleccionar • Rueda = altura • Doble click = interior • Click derecho = demoler</div>
-</div></div>
-
-<div id="center"><div id="canvas"></div><div id="interiorPanel"><b id="intTitle" style="font-size:11px">INTERIOR MODE</b><div style="font-size:9px;opacity:.6;margin-top:6px">Personalización interior</div><input type="color" id="wallC" value="#e8ddd0" style="width:100%;margin-top:8px"><button class="btn" id="addSofa">+ Sofá Japandi</button><button class="btn" id="addTable">+ Mesa Centro</button><button class="btn" style="background:#2a1a1a" id="exitInt">← Salir interior</button></div></div>
-
+<div id="top"><b>SAMA <span style="color:#5ee1ff">ARCHITECT</span> <span style="font-size:10px;opacity:.5">v9 JAPANDI DOLLHOUSE • 2026</span></b><span style="margin-left:18px;background:#0f2418;border:1px solid #2aff7a;color:#2aff7a;font-family:monospace;font-size:9px;padding:4px 10px;border-radius:20px">● SIMULATION RUNNING • PBR REALISTIC</span></div>
+<div id="left"><div id="profiles"></div>
+<div class="card"><h3>CATALOGO REALISTA</h3>
+<button class="btn active" data-t="casa">🏠 CASA JAPANDI 2.85m - Aleja 22A • Madera + Interior</button>
+<button class="btn" data-t="edificio">🏢 EDIFICIO Industrial - Andres 18A</button>
+<button class="btn" data-t="hotel">🏨 HOTEL Rococó - Diana 18A</button>
+<button class="btn" data-t="tienda">🛍️ TIENDA Med - Alfred 20A</button>
+</div>
+<div style="font-size:8px;opacity:.4;margin-top:8px">Click lote → construye casa tipo tu foto. Doble click casa → entra interior.</div>
+</div>
+<div id="center"><div id="canvas"></div><div id="interiorPanel"><b style="font-size:11px">MODO INTERIOR - JAPANDI</b><div style="font-size:8px;opacity:.5;margin:6px 0">Casa de referencia Aleja</div><input type="color" id="woodC" value="#c4a882" style="width:100%"><button class="btn" id="exitInt">← Salir</button></div></div>
 <div id="right">
 <div class="card"><h3>DASHBOARD - REAL-TIME METRICS</h3><div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-family:monospace;font-size:9px">
-<div style="background:#0a1220;padding:8px;border-radius:8px">POPULATION<br><b style="font-size:14px;color:#fff" id="pop">12,847</b><br><span style="color:#2aff7a" id="popD">+124 (1.0%)</span></div>
-<div style="background:#0a1220;padding:8px;border-radius:8px">BUDGET<br><b style="font-size:14px;color:#fff">$4.82M</b><br><span style="color:#ff5a5a">-$120K</span></div>
-<div style="background:#0a1220;padding:8px;border-radius:8px">FOOT TRAFFIC<br><b id="foot">3,240 p/h</b></div>
-<div style="background:#0a1220;padding:8px;border-radius:8px">CARBON<br><b>1.42 tCO₂</b><br><span style="color:#2aff7a">-14.2% ↓</span></div>
+<div style="background:#0a1220;padding:8px;border-radius:8px">POPULATION<br><b id="pop" style="font-size:14px;color:#fff">12,847</b><br><span style="color:#2aff7a">+124</span></div>
+<div style="background:#0a1220;padding:8px;border-radius:8px">BUDGET<br><b style="font-size:14px;color:#fff">$4.82M</b></div>
+<div style="background:#0a1220;padding:8px;border-radius:8px">CASAS JAPANDI<br><b id="houseCount">0</b></div>
+<div style="background:#0a1220;padding:8px;border-radius:8px">CARBON<br><b>1.42 tCO₂ ↓</b></div>
 </div></div>
-<div class="card"><h3>SYSTEM ANALYTICS - TRAFFIC FLOW (24H)</h3><canvas id="chart" width="280" height="70" style="background:#0a1220;border-radius:6px;width:100%"></canvas></div>
-<div class="card"><h3>ENVIRONMENTAL DATA</h3><div style="font-family:monospace;font-size:9px"><div style="display:flex;justify-content:space-between;margin:4px 0"><span>Sun Exposure:</span><span>72%</span></div><div style="display:flex;justify-content:space-between;margin:4px 0"><span>Wind Flow:</span><span>14 km/h NW</span></div><div style="display:flex;justify-content:space-between;margin:4px 0"><span>Noise Level:</span><span>58 dB</span></div></div></div>
-<div class="card"><h3>SELECTED LOT</h3><div id="lotInfo" style="font-family:monospace;font-size:9px">Ningún lote seleccionado</div></div>
+<div class="card"><h3>SELECTED LOT</h3><div id="lotInfo" style="font-family:monospace;font-size:9px">Lote libre - Click para construir CASA JAPANDI como tu foto</div></div>
+<div class="card"><h3>SYSTEM ANALYTICS</h3><canvas id="chart" width="280" height="60" style="background:#0a1220;border-radius:6px;width:100%"></canvas></div>
 </div>
-
 <script type="module">
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-const ARCHS={
- aleja:{name:'Aleja Japandi - 22A',age:22,img:'aleja.jpg',col:0xe8ddd0,accent:0xc4a882},
- andres:{name:'Andres Industrial - 18A',age:18,img:'andres.jpg',col:0x9a9a9a,accent:0xffc83d},
- diana:{name:'Diana Rococo - 18A',age:18,img:'diana.jpg',col:0xfff6e0,accent:0xd4af37},
- alfred:{name:'Alfred Mediterraneo - 20A',age:20,img:'alfred.jpg',col:0xf5e6c8,accent:0xc05c3c},
- diego:{name:'Diego Contemporaneo - 19A',age:19,img:'diego.jpg',col:0x222222,accent:0x5ee1ff}
-};
-let current='aleja',scene,camera,renderer,controls,lots=[],builds=[],ray,mouse,selected=null,inside=null,hovered=null,pop=12847;
+const ARCHS={aleja:{name:'Aleja Japandi - 22A Trigueña pestañas largas castaño oscuro',img:'aleja.jpg',col:0xe8ddd0},andres:{name:'Andres Industrial - 18A Trigueño gorra ojos claros',img:'andres.jpg'},diana:{name:'Diana Rococo - 18A pelo largo lentes',img:'diana.jpg'},alfred:{name:'Alfred Med - 20A corto lado coreano',img:'alfred.jpg'},diego:{name:'Diego Contemp - 19A',img:'diego.jpg'}};
+let current='aleja',scene,camera,renderer,controls,lots=[],builds=[],ray,mouse,selected=null,inside=null,houseCount=0;
 const cDiv=document.getElementById('canvas');
 function init(){
- scene=new THREE.Scene();scene.background=new THREE.Color(0x9fb0c8);scene.fog=new THREE.Fog(0x9fb0c8,35,85);
- camera=new THREE.PerspectiveCamera(38,cDiv.clientWidth/cDiv.clientHeight,0.1,200);camera.position.set(18,18,18);
- renderer=new THREE.WebGLRenderer({antialias:true});renderer.setSize(cDiv.clientWidth,cDiv.clientHeight);renderer.setPixelRatio(Math.min(devicePixelRatio,2));
- renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.15;renderer.outputColorSpace=THREE.SRGBColorSpace;
- cDiv.appendChild(renderer.domElement);
- controls=new OrbitControls(camera,renderer.domElement);controls.enableDamping=true;controls.dampingFactor=0.08;controls.target.set(0,0,0);
- scene.add(new THREE.HemisphereLight(0xddeeff,0x303040,1.1));
- const sun=new THREE.DirectionalLight(0xffffff,1.8);sun.position.set(20,35,15);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);sun.shadow.camera.left=-40;sun.shadow.camera.right=40;sun.shadow.camera.top=40;sun.shadow.camera.bottom=-40;scene.add(sun);
- const ground=new THREE.Mesh(new THREE.PlaneGeometry(300,300),new THREE.MeshStandardMaterial({color:0xaab8c8,roughness:0.9}));ground.rotation.x=-Math.PI/2;ground.receiveShadow=true;scene.add(ground);
- for(let x=-5;x<=5;x++){for(let z=-5;z<=5;z++){const mat=new THREE.MeshStandardMaterial({color:0xe2e8f0,roughness:0.7});const lot=new THREE.Mesh(new THREE.BoxGeometry(3.5,0.18,3.5),mat);lot.position.set(x*4.4,0.09,z*4.4);lot.receiveShadow=true;lot.userData={built:false,grid:{x,z},origColor:0xe2e8f0};lots.push(lot);scene.add(lot);const edge=new THREE.LineSegments(new THREE.EdgesGeometry(lot.geometry),new THREE.LineBasicMaterial({color:0x6b7b8f,transparent:true,opacity:0.6}));edge.position.copy(lot.position);edge.position.y+=0.01;scene.add(edge);}}
+ scene=new THREE.Scene();scene.background=new THREE.Color(0x9fb0c8);scene.fog=new THREE.Fog(0x9fb0c8,30,80);
+ camera=new THREE.PerspectiveCamera(36,cDiv.clientWidth/cDiv.clientHeight,0.1,200);camera.position.set(10,9,10);
+ renderer=new THREE.WebGLRenderer({antialias:true});renderer.setSize(cDiv.clientWidth,cDiv.clientHeight);renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.2;renderer.outputColorSpace=THREE.SRGBColorSpace;cDiv.appendChild(renderer.domElement);
+ controls=new OrbitControls(camera,renderer.domElement);controls.enableDamping=true;controls.target.set(0,0,0);
+ scene.add(new THREE.HemisphereLight(0xeef5ff,0x303040,1.2));const sun=new THREE.DirectionalLight(0xffffff,2);sun.position.set(12,25,10);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);scene.add(sun);
+ const ground=new THREE.Mesh(new THREE.PlaneGeometry(300,300),new THREE.MeshStandardMaterial({color:0xb8c4d0,roughness:0.9}));ground.rotation.x=-Math.PI/2;ground.receiveShadow=true;scene.add(ground);
+ for(let x=-4;x<=4;x++){for(let z=-4;z<=4;z++){const mat=new THREE.MeshStandardMaterial({color:0xe6ecf2,roughness:0.7});const lot=new THREE.Mesh(new THREE.BoxGeometry(3.8,0.15,3.8),mat);lot.position.set(x*4.6,0.075,z*4.6);lot.receiveShadow=true;lot.userData={built:false};lots.push(lot);scene.add(lot);}}
  createProfiles();ray=new THREE.Raycaster();mouse=new THREE.Vector2();
- renderer.domElement.addEventListener('pointermove',onMove);renderer.domElement.addEventListener('pointerdown',onDown);renderer.domElement.addEventListener('dblclick',onDbl);renderer.domElement.addEventListener('contextmenu',e=>{e.preventDefault();onRight(e);});
- document.querySelectorAll('.btn[data-t]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.btn[data-t]').forEach(x=>x.classList.remove('active'));b.classList.add('active');if(selected) build(selected,b.dataset.t);}));
- document.getElementById('exitInt').onclick=()=>{inside=null;document.getElementById('interiorPanel').style.display='none';camera.position.set(18,18,18);controls.target.set(0,0,0);};document.getElementById('wallC').oninput=e=>{if(inside) inside.mat.color.set(e.target.value);};
+ renderer.domElement.addEventListener('pointerdown',onDown);renderer.domElement.addEventListener('dblclick',onDbl);
+ document.querySelectorAll('.btn').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');if(selected) build(selected,b.dataset.t);}));
+ document.getElementById('exitInt').onclick=()=>{inside=null;document.getElementById('interiorPanel').style.display='none';camera.position.set(10,9,10);controls.target.set(0,0,0);};
  window.addEventListener('resize',()=>{camera.aspect=cDiv.clientWidth/cDiv.clientHeight;camera.updateProjectionMatrix();renderer.setSize(cDiv.clientWidth,cDiv.clientHeight);});
- animate();setInterval(()=>{pop+=Math.floor(Math.random()*5);document.getElementById('pop').textContent=pop.toLocaleString();document.getElementById('foot').textContent=(3200+Math.floor(Math.random()*200))+' p/h';},1200);drawChart();
- // Logs solo en consola, no público
- console.log('%cSAMA ARCHITECT V8 PRO','color:#5ee1ff;font-size:16px;font-weight:bold');console.log('Debug interno: [DECIMALES] 2.85m Aleja 22 trigueña | [CUADRATICA] Andres 18 trigueño gorra | [LINEAL] Diana 18 | [VOL] Alfred 20 | [ARCO] Diego 19');
+ animate();
 }
-function createProfiles(){const c=document.getElementById('profiles');c.innerHTML='';Object.keys(ARCHS).forEach(k=>{const a=ARCHS[k];const d=document.createElement('div');d.className='prof'+(k===current?' active':'');d.innerHTML=`<img src="${a.img}" onerror="this.src='https://ui-avatars.com/api/?name=${k}'"><div><b style="font-size:10px">${a.name}</b><div style="font-size:7px;opacity:.6">ACTIVE • ${a.age}A • ${a.name.split(' ')[1]}</div></div>`;d.onclick=()=>{current=k;document.querySelectorAll('.prof').forEach(p=>p.classList.remove('active'));d.classList.add('active');};c.appendChild(d);});}
-function onMove(e){if(inside) return;const r=renderer.domElement.getBoundingClientRect();mouse.x=((e.clientX-r.left)/r.width)*2-1;mouse.y=-((e.clientY-r.top)/r.height)*2+1;ray.setFromCamera(mouse,camera);const hits=ray.intersectObjects(lots);if(hovered&&hovered!==selected)hovered.material.color.set(hovered.userData.origColor);if(hits.length&&!hits[0].object.userData.built){hovered=hits[0].object;if(hovered!==selected)hovered.material.color.set(0xb0d8ff);}else hovered=null;}
-function onDown(e){if(inside) return;ray.setFromCamera(mouse,camera);const hits=ray.intersectObjects(lots);if(hits.length&&!hits[0].object.userData.built){if(selected)selected.material.color.set(selected.userData.origColor);selected=hits[0].object;selected.material.color.set(0x5ee1ff);document.getElementById('lotInfo').innerHTML=`<b>LOTE ${selected.userData.grid.x},${selected.userData.grid.z}</b><br>Zoning: MIXED-USE<br>Arquitecto: ${ARCHS[current].name}<br><i style="opacity:.6">Elige un edificio a la izquierda para construir</i>`;}}
-function onRight(e){ray.setFromCamera(mouse,camera);const hits=ray.intersectObjects(builds.map(b=>b.mesh));if(hits.length){const idx=builds.findIndex(b=>b.mesh===hits[0].object);if(idx>=0){scene.remove(builds[idx].group);builds.splice(idx,1);document.getElementById('lotInfo').textContent='Lote demolido - disponible';}}
+function createProfiles(){const c=document.getElementById('profiles');Object.keys(ARCHS).forEach(k=>{const a=ARCHS[k];const d=document.createElement('div');d.className='prof'+(k===current?' active':'');d.innerHTML=`<img src="${a.img}" onerror="this.src='https://ui-avatars.com/api/?name=${k}'"><div><b style="font-size:10px">${a.name}</b></div>`;d.onclick=()=>{current=k;document.querySelectorAll('.prof').forEach(p=>p.classList.remove('active'));d.classList.add('active');};c.appendChild(d);});}
+function onDown(e){const r=renderer.domElement.getBoundingClientRect();mouse.x=((e.clientX-r.left)/r.width)*2-1;mouse.y=-((e.clientY-r.top)/r.height)*2+1;ray.setFromCamera(mouse,camera);const hits=ray.intersectObjects(lots);if(hits.length&&!hits[0].object.userData.built){if(selected)selected.material.color.set(0xe6ecf2);selected=hits[0].object;selected.material.color.set(0x5ee1ff);document.getElementById('lotInfo').innerHTML=`<b>LOTE ${hits[0].object.position.x.toFixed(0)},${hits[0].object.position.z.toFixed(0)}</b><br>Listo para CASA JAPANDI 2.85m<br>Arquitecta: Aleja 22A Trigueña`;} }
+function onDbl(e){ray.setFromCamera(mouse,camera);const hits=ray.intersectObjects(builds.map(b=>b.group),true);if(hits.length){const root=builds.find(b=>b.group.children.includes(hits[0].object) || b.group===hits[0].object.parent?.parent);if(root){inside=root;document.getElementById('interiorPanel').style.display='block';camera.position.set(root.group.position.x+2,2.5,root.group.position.z+2);controls.target.copy(root.group.position);}}}
+
+// CASA JAPANDI EXACTA COMO TU FOTO - DOLLHOUSE
+function createJapandiHouse(group){
+ const wood=new THREE.MeshStandardMaterial({color:0xc4a882,roughness:0.6});const white=new THREE.MeshStandardMaterial({color:0xf5f3ef,roughness:0.8});const glass=new THREE.MeshStandardMaterial({color:0xaaccff,transparent:true,opacity:0.25,roughness:0.1});const concrete=new THREE.MeshStandardMaterial({color:0xdddddd,roughness:0.9});
+ // base
+ const base=new THREE.Mesh(new THREE.BoxGeometry(3.8,0.12,3.4),concrete);base.position.y=0.06;group.add(base);
+ // piso 1 losa
+ const floor1=new THREE.Mesh(new THREE.BoxGeometry(3.6,0.08,3.2),new THREE.MeshStandardMaterial({color:0xe8ddd0}));floor1.position.y=0.16;group.add(floor1);
+ // piso 2 losa
+ const floor2=new THREE.Mesh(new THREE.BoxGeometry(3.6,0.08,3.2),new THREE.MeshStandardMaterial({color:0xf0ebe3}));floor2.position.y=2.85;group.add(floor2);
+ // techo
+ const roof=new THREE.Mesh(new THREE.BoxGeometry(3.7,0.08,3.3),concrete);roof.position.y=5.7;group.add(roof);
+ // pared madera izquierda piso1
+ const w1=new THREE.Mesh(new THREE.BoxGeometry(0.08,2.85,3.2),wood);w1.position.set(-1.76,1.5,0);group.add(w1);
+ // pared madera derecha
+ const w2=new THREE.Mesh(new THREE.BoxGeometry(0.08,5.7,0.08),wood);w2.position.set(1.76,2.85,0);group.add(w2);
+ // pared trasera madera arriba
+ const wBack=new THREE.Mesh(new THREE.BoxGeometry(3.6,2.85,0.08),new THREE.MeshStandardMaterial({color:0xd4b896}));wBack.position.set(0,4.3,-1.56);group.add(wBack);
+ // vidrio grande frente piso1 y piso2 (corte)
+ const g1=new THREE.Mesh(new THREE.PlaneGeometry(2.5,2.5),glass);g1.position.set(0,1.5,1.61);g1.rotation.y=Math.PI;group.add(g1);
+ const g2=new THREE.Mesh(new THREE.PlaneGeometry(2.5,2.5),glass);g2.position.set(0,4.3,1.61);group.add(g2);
+ // escalera madera
+ for(let i=0;i<8;i++){const step=new THREE.Mesh(new THREE.BoxGeometry(0.6,0.04,0.22),wood);step.position.set(0.5,0.3+i*0.33,-0.5+i*0.22);group.add(step);}
+ // muebles piso1 - sofa gris
+ const sofa=new THREE.Mesh(new THREE.BoxGeometry(0.8,0.35,0.4),new THREE.MeshStandardMaterial({color:0x8a8a8a}));sofa.position.set(-1,0.5,0.8);group.add(sofa);
+ // mesa centro
+ const tableC=new THREE.Mesh(new THREE.BoxGeometry(0.4,0.08,0.25),wood);tableC.position.set(-1,0.3,0.2);group.add(tableC);
+ // comedor
+ const tableD=new THREE.Mesh(new THREE.BoxGeometry(0.7,0.04,0.45),new THREE.MeshStandardMaterial({color:0xe8ddd0}));tableD.position.set(0.2,0.5,-0.2);group.add(tableD);
+ // cocina isla
+ const island=new THREE.Mesh(new THREE.BoxGeometry(1,0.4,0.4),white);island.position.set(1,0.4,-0.8);group.add(island);
+ // camas piso2
+ const bed1=new THREE.Mesh(new THREE.BoxGeometry(0.9,0.2,1.1),new THREE.MeshStandardMaterial({color:0xe8e0d0}));bed1.position.set(-0.8,3.15,0.3);group.add(bed1);
+ const bed2=new THREE.Mesh(new THREE.BoxGeometry(0.9,0.2,1.1),new THREE.MeshStandardMaterial({color:0xe8e0d0}));bed2.position.set(0.9,3.15,-0.8);group.add(bed2);
+ // sombra
+ group.traverse(o=>{if(o.isMesh){o.castShadow=true;o.receiveShadow=true;}});
 }
-function onDbl(e){ray.setFromCamera(mouse,camera);const hits=ray.intersectObjects(builds.map(b=>b.mesh));if(hits.length){const b=builds.find(x=>x.mesh===hits[0].object);inside=b;document.getElementById('interiorPanel').style.display='block';document.getElementById('intTitle').textContent=b.type.toUpperCase()+' - '+ARCHS[b.arch].name;camera.position.set(b.group.position.x+2,2,b.group.position.z+2);controls.target.copy(b.group.position);}}
 function build(lot,type){
  if(lot.userData.built) return;lot.userData.built=true;lot.visible=false;
- const arch=ARCHS[current];const H=type==='casa'?2.85:type==='edificio'?14:type==='hotel'?9:type==='tienda'?4.5:5.5;
  const group=new THREE.Group();group.position.set(lot.position.x,0,lot.position.z);scene.add(group);
- const scaff=new THREE.Group();for(let i=0;i<4;i++){const p=new THREE.Mesh(new THREE.CylinderGeometry(0.03,0.03,H,6),new THREE.MeshStandardMaterial({color:0xffcc4d}));p.position.set(i%2?1.7:-1.7,H/2,i>1?1.7:-1.7);scaff.add(p);}const plat=new THREE.Mesh(new THREE.BoxGeometry(3.8,0.05,3.8),new THREE.MeshStandardMaterial({color:0xffcc4d,transparent:true,opacity:0.3}));plat.position.y=H;if(H>6)scaff.add(plat);group.add(scaff);
- const geo=type==='casa'?new THREE.BoxGeometry(2.9,2.85,2.9):type==='edificio'?new THREE.BoxGeometry(3.1,H,3.1):type==='hotel'?new THREE.BoxGeometry(4.2,9,3.2):type==='tienda'?new THREE.BoxGeometry(3.6,4.5,2.8):new THREE.BoxGeometry(3.8,5.5,3);
- const mat=new THREE.MeshStandardMaterial({color:arch.col,roughness:current==='aleja'?0.8:0.5,metalness:current==='diego'?0.6:0.05});const mesh=new THREE.Mesh(geo,mat);mesh.position.y=0;mesh.scale.y=0.001;mesh.castShadow=true;mesh.receiveShadow=true;group.add(mesh);
- const floors=Math.floor(H/2.85);for(let f=0;f<floors;f++){setTimeout(()=>{for(let k=0;k<2;k++){const win=new THREE.Mesh(new THREE.PlaneGeometry(0.45,0.6),new THREE.MeshStandardMaterial({color:0xfff5a0,emissive:0xffd56a,emissiveIntensity:1.2}));win.position.set(1.56,(f*2.85)+1.2,k?0.6:-0.6);win.rotation.y=Math.PI/2;group.add(win);}},f*180);}
- // polvo particulas
- const dust=new THREE.Points(new THREE.BufferGeometry().setAttribute('position',new THREE.Float32BufferAttribute(new Array(60).fill(0).map(()=> (Math.random()-0.5)*4),3)),new THREE.PointsMaterial({color:0xffffff,size:0.08,transparent:true,opacity:0.6}));dust.position.y=H/2;group.add(dust);
- const crane=new THREE.Group();const base=new THREE.Mesh(new THREE.CylinderGeometry(0.1,0.14,6,8),new THREE.MeshStandardMaterial({color:0xffcc4d}));base.position.y=3;crane.add(base);const arm=new THREE.Mesh(new THREE.BoxGeometry(7,0.08,0.08),new THREE.MeshStandardMaterial({color:0xffcc4d}));arm.position.set(1.5,6,0);crane.add(arm);crane.position.set(3.5,0,0);group.add(crane);
- builds.push({mesh,group,arch:current,type,mat});const start=Date.now();(function anim(){const t=Math.min((Date.now()-start)/(H*120+800),1),e=1-Math.pow(1-t,3);mesh.scale.y=e;mesh.position.y=(H*e)/2;crane.rotation.y+=0.03;dust.rotation.y+=0.02;dust.material.opacity=1-t;if(t<1)requestAnimationFrame(anim);else{group.remove(scaff);group.remove(crane);group.remove(dust);}})();
- document.getElementById('lotInfo').innerHTML=`<b style="color:#5ee1ff">CONSTRUIDO: ${type.toUpperCase()}</b><br>Arquitecto: ${arch.name}<br>Altura: ${H}m - ${floors} plantas<br>Área: ${(geo.parameters.width*geo.parameters.depth).toFixed(1)}m²<br>Volumen: ${(geo.parameters.width*geo.parameters.depth*H).toFixed(0)}m³<br><br><span style="color:#2aff7a">✓ 2.85m exacto validado</span>`;
- // update metrics
- pop+=45;
+ if(type==='casa'){
+   createJapandiHouse(group);
+   // animacion realista piso x piso
+   const all=[];group.traverse(o=>{if(o.isMesh) all.push(o);});all.forEach(m=>{m.scale.set(0.001,0.001,0.001);});
+   let idx=0;(function seq(){if(idx>=all.length) return;const m=all[idx];const s={x:0};const start=Date.now();(function grow(){const t=Math.min((Date.now()-start)/180,1);const e=1-Math.pow(1-t,3);m.scale.set(e,e,e);if(t<1)requestAnimationFrame(grow);else{idx++;setTimeout(seq,40);}})();})();
+   houseCount++;document.getElementById('houseCount').textContent=houseCount;
+   document.getElementById('lotInfo').innerHTML=`<b style="color:#5ee1ff">CASA JAPANDI CONSTRUIDA</b><br>Como tu foto referencia<br>Arquitecta: Aleja 22A Trigueña pestañas largas castaño oscuro<br>Altura: 2.85m x 2 pisos = 5.7m<br>Estilo: Madera clara + interior completo<br><br>✓ Animación dollhouse piso x piso`;
+ }else{
+   const geo=new THREE.BoxGeometry(2.8,type==='edificio'?14:6,2.8);const mat=new THREE.MeshStandardMaterial({color:ARCHS[current].col||0x888888});const mesh=new THREE.Mesh(geo,mat);mesh.position.y=geo.parameters.height/2;mesh.castShadow=true;group.add(mesh);builds.push({group,mesh});
+ }
+ builds.push({group,type});
 }
-function drawChart(){const c=document.getElementById('chart');if(!c) return;const ctx=c.getContext('2d');let off=0;setInterval(()=>{ctx.fillStyle='#0a1220';ctx.fillRect(0,0,280,70);ctx.strokeStyle='#5ee1ff';ctx.lineWidth=1.5;ctx.beginPath();for(let i=0;i<280;i++){const y=35+Math.sin((i+off)/25)*12+Math.sin((i+off)/12)*6;if(i===0)ctx.moveTo(i,y);else ctx.lineTo(i,y);}ctx.stroke();off+=2;},50);}
 function animate(){requestAnimationFrame(animate);controls.update();renderer.render(scene,camera);}
 init();
 </script>
